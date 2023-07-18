@@ -32,7 +32,7 @@ function Mint({extraData, setDisplayPage}) {
 
           <Batch>
             <Input placeholder='amount' type="number" max={20} onChange={handleInput}></Input>
-            <button style={{flexGrow: "4"}} disabled={!isMinting || !address} onClick={batchPlantTree.write}>mint batch (20 max)</button>
+            <button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 20} onClick={batchPlantTree.write}>mint batch (20 max)</button>
           </Batch>
           
           

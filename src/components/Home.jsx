@@ -92,8 +92,8 @@ function Home({ extraData, setDisplayPage }) {
         <br/>
         <p>
           When you plant a tree, the timestamp and minters address are stored on chain. 
-          these two numbers plus the token id added together make up the seed of the tree and used to
-          determinastically generate unique branch lengths and angles resulting
+          these two numbers plus the token id added together make up the seed of the tree and is used to
+          deterministically generate unique branch lengths and angles resulting
           in a tree that is comepletely unique.
         </p>
         <br />
@@ -105,20 +105,20 @@ function Home({ extraData, setDisplayPage }) {
           "water(id)" and sending ether. If the tree exists, and is currently in
           its growing period, it will reduce the total grow period by
           approximately 10% per .1 ether. for example, if a user mints and waits 50 days (50% grown) 
-          and then "waters" it with .5 ether, it will be fully grown. any user can water any tree at any
+          and then "waters" it with .5 ether, it will become fully grown. any user can water any tree at any
           time.
         </p>
         <p>
           Once the tree is fully grown, the first fruit grow period starts.
           Fruit takes 4 weeks to grow and be harvestable. in the first week,
           nothing happens. over the next 3 weeks, fruit may or may not start
-          slowly start growing on your tree. the fruit amount depends on the
+          slowly growing on your tree. the fruit amount depends on the
           fruit seed that is generated at mint time and updated each time the
           tree is harvested or fruit is picked. after the 4 weeks, if the tree
           has fruit, it can be harvested. harvesting does 4 things:
         </p>
         <br />
-        - recursively counts the amount of fruit on the tree (expensive!)
+        - recursively counts the amount of fruit on the tree (expensive)
         <br />
         - creates and saves a new fruit seed
         <br />

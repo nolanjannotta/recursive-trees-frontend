@@ -24,7 +24,7 @@ function Mint({extraData, setDisplayPage}) {
         <P>price: {formatEther(extraData[5].result.toString())} eth</P>
         <P>{(extraData[2].result - 1n).toString()} / {extraData[1].result.toString()} minted</P> 
       </Info>
-      { !address &&  <p>please connact a wallet to mint</p>}
+      { !address &&  <p>please connect a wallet to mint</p>}
       <Buttons>    
           
           <button disabled={!isMinting || !address} onClick={plantTreeWrite.write}>mint 1</button>

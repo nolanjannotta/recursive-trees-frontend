@@ -41,7 +41,7 @@ function Home({ extraData, setDisplayPage }) {
               setDisplayPage(3);
             }}
           >
-            mint
+            plant
           </button>
           
 

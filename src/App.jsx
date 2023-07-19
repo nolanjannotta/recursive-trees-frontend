@@ -22,7 +22,7 @@ function App() {
 
 
   const { chains, publicClient } = configureChains(
-    [goerli, mainnet, polygon, optimism, arbitrum],
+    [goerli],
     [
       alchemyProvider({ apiKey: "RMv47zcgxW5yjSyfRQjPHCru9rJyNiuK" }),
       publicProvider()

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useContractWrites } from "../hooks/useContractWrites";
+import {recursiveTrees} from '../Contracts.js' 
 
 function TreeControls({ isOwner, treeId, tokenURI }) {
   const [waterAmount, setWaterAmount] = useState(0);
@@ -36,6 +37,13 @@ function TreeControls({ isOwner, treeId, tokenURI }) {
         <Button disabled={!isOwner} onClick={pickFruitWrite.write}>
           Pick fruit
         </Button>
+        <a href={`https://testnets.opensea.io/assets/goerli/${recursiveTrees}/${treeId}`} target="blank">
+        <Button disabled={!isOwner} onClick={pickFruitWrite.write}>
+          opensea
+          
+        </Button>
+        </a>
+
       </ButtonColumn>
       <ButtonColumn>
         <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={handleInput}></Input>

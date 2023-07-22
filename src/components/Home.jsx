@@ -15,7 +15,7 @@ function Home({ extraData, setDisplayPage }) {
     <Container>
       <Demo>
         <h1>Recursive Trees</h1>
-        {extraData ? (
+        {!extraData[0].error ? (
           <object
             data={
               "data:image/svg+xml;base64," +
@@ -24,7 +24,7 @@ function Home({ extraData, setDisplayPage }) {
             width="50%"
             // height="100%"
             type="image/svg+xml"
-          ></object>) : (<p>loading svg...</p>)
+          ></object>) : (<p>error loading demo tree</p>)
       
       }
 

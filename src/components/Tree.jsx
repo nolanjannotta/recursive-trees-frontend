@@ -28,7 +28,7 @@ function Tree({ extraData, treeId, setTreeId, setDisplayPage }) {
 
   useEffect(() => {
     treeData && setIsOwner(treeData[2].result == address); 
-    setTreeInRange(++treeId > (extraData[2].result - 1n))
+    setTreeInRange(++treeId > (extraData[2].result))
 
   }, [treeData,extraData]);
 
@@ -37,9 +37,9 @@ function Tree({ extraData, treeId, setTreeId, setDisplayPage }) {
       <h1>Tree #{treeId}</h1>
       <Middle>
         <Left>
-          {treeData && (
+          {treeData && !treeData[0].error ? (
             <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result[0]).toString("base64")} type="image/svg+xml"></SVG>
-          )}
+          ) : <Error>loading tree</Error>}
           <Buttons>
             <button disabled={treeId - 1 == 0} onClick={()=> setTreeId((treeId) => --treeId)}>previous</button>
             <button disabled={treeInRange} onClick={()=> setTreeId((treeId) => ++treeId)}>next</button>
@@ -89,8 +89,15 @@ const Left = styled.div`
   align-items: center;
 `;
 
+const Error = styled.p`
+  height: 100%;
+
+`
+
 const SVG = styled.object`
-  width: 90%;
+  width: 80%;
+  // height: 70%;
+  
 `;
 const Container = styled.div`
   width: 100%;
@@ -107,7 +114,7 @@ const Middle = styled.div`
   width: 90%;
   // padding: 1.5em;
   // margin-top: 5em;
-  min-height: min-content;
+  min-height: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;

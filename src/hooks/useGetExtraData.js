@@ -34,7 +34,7 @@ export function useGetExtraData() {
           },
           {
             ...treeContract,
-            functionName: 'nextId',
+            functionName: 'currentId',
           },
           {
             ...treeContract,

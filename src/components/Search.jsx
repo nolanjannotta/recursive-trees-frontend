@@ -20,7 +20,7 @@ function Search({extraData, userTrees, setDisplayPage, setTreeId}) {
     <Container>
       <h1>search</h1>
       <SearchControls>      
-        <p>{(extraData[2].result - 1n).toString()} / {extraData[1].result.toString()} minted</p>
+        <p>{(extraData[2].result).toString()} / {extraData[1].result.toString()} minted</p>
         {/* <p>{userTrees.length > 0 ? "you own trees " + userTrees.toString() : !userTrees ? "" : "you own zero trees"}</p> */}
         {/* <p>{"you own " + extraData[3].result + " trees"}</p> */}
         

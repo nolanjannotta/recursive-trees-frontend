@@ -27,6 +27,26 @@
   },
   {
     "inputs": [],
+    "name": "CantOperateOnThisTree",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ExceedsTreeMax",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "HarvestPeriodNotReached",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectMsgValue",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidQueryRange",
     "type": "error"
   },
@@ -73,6 +93,11 @@
   {
     "inputs": [],
     "name": "TransferToZeroAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TreeDoesNotExist",
     "type": "error"
   },
   {
@@ -353,6 +378,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "currentId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -435,6 +473,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "fruitToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -462,30 +513,6 @@
       }
     ],
     "name": "getGrowPeriod",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "age",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "totalEthReceived",
-        "type": "uint256"
-      }
-    ],
-    "name": "getPercentGrown",
     "outputs": [
       {
         "internalType": "uint256",
@@ -664,19 +691,6 @@
         "internalType": "string",
         "name": "",
         "type": "string"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "nextId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",

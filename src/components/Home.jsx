@@ -92,9 +92,18 @@ function Home({ extraData, setDisplayPage }) {
         <br/>
         <p>
           When you plant a tree, the timestamp and minters address are stored on chain. 
-          these two numbers plus the token id added together make up the seed of the tree and is used to
+          These two numbers plus the token id added together make up the seed of the tree and is used to
           deterministically generate unique branch lengths and angles resulting
-          in a tree that is comepletely unique.
+          in a tree that is comepletely unique. This is all done inside the smart contract, the entire svg and all traits are returned from the blockchain.
+          This means there are zero urls, centralized servers, dependencies, javascript etc. There is one caveat though, in some cases a tree might be so big
+          that it runs out of gas while recursively generating the image on chain. If this happens, the owner can toggle the render method to off chain. 
+          This means that instead of generating the svg from scratch in the smart contract, an empty image in returned with a javascript program inside of it that handles the tree generating in the browser.
+          This script depends on one external library for the keccak256 algorithm, which is used to generate an identical tree as it. A url to the library is stored on chain and can be updated.
+          <br/>
+          In some cases though even if calling tokenURI() might fail, theres another function called getRawSvg() which returns raw svg code for a tree. 
+          This function costs much less than token URI and still generates the svg on chain. So, if your tree is too big for tokenURI() and you're an on chain purest as you should be, getRawSvg() might still be able to generate your tree for you.
+
+
         </p>
         <br />
         <p>

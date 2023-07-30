@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import styled from 'styled-components'
 // import { useGetTree } from '../hooks/useGetTree'
 
-function Search({extraData, userTrees, setDisplayPage, setTreeId}) {
+function Search({extraData, setDisplayPage, setTreeId}) {
     const [input, setInput] = useState(0);
     const [treeExists, setTreeExists] = useState(true)
     console.log(extraData);
@@ -11,7 +11,7 @@ function Search({extraData, userTrees, setDisplayPage, setTreeId}) {
     }
 
     useEffect(()=>{
-      setTreeExists(input <= (extraData[2].result - 1n))
+      setTreeExists(input <= (extraData[2].result))
 
     },[input])
 

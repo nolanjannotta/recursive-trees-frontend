@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import {useAccount} from "wagmi";
+import {formatEther, parseEther} from "viem"
+
 import {
     useConnectModal,
     useAccountModal,
@@ -9,20 +11,48 @@ import {
 
 
 function Wallet({setDisplayPage, extraData}) {
-    console.log(extraData)
     
     const { address, isConnecting, isDisconnected } = useAccount();
 
     const { openAccountModal } = useAccountModal();
+    const [ids, setIds] = useState({
+      ids: [],
+      overFlow:0
+    });
+
+    useEffect(()=>{
+      if(extraData[6].result) {
+
+        setIds({
+          ids: extraData[6].result.length > 20 ? extraData[6].result.slice(0,20) : extraData[6].result,
+          overFlow: extraData[6].result.length > 20 ? extraData[6].result.length - 20 : 0
+        })
+
+        
+      }
+      
+    },[extraData[6]])
+
+
+
+    useEffect(()=>{
+      console.log(ids)
+    },[ids])
 
   return (
     <Container>
         <h1>wallet</h1>
         <Body>
         <h4>{address}</h4>
-        <h4> fruit token balance: {extraData[4].result ? extraData[4].result.toString() : 0}</h4>
+
+          <h4> fruit token balance: {formatEther(extraData[4].result)} </h4>
+          
+        <h4> fruit total supply: {formatEther(extraData[9].result)}</h4>
+
         <h4> tree  balance: {extraData[3].result ? extraData[3].result.toString() : 0}</h4>
-        <h4> ids: {extraData[6].result && extraData[6].result.map(element => " " + element.toString()).toString()}</h4>
+
+        {<h4> ids: {ids.ids.map(element => " " + element.toString()).toString()} { ids.overFlow > 0 && ("+" + ids.overFlow + "more") }</h4>}
+        
         
         
 
@@ -45,6 +75,15 @@ function Wallet({setDisplayPage, extraData}) {
 }
 
 export default Wallet
+
+
+const FruitToken = styled.div`
+  display: flex;
+  width: 80%;
+  align-items: flex-end;
+  justify-content: center;
+
+`
 
 
 const Body = styled.div`
@@ -75,11 +114,8 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  
-
   background-color: #b6b6b6;
   border: 2px solid black;
-//   overflow-y: scroll;
   box-shadow: 10px 10px rgb(26, 26, 26, 0.8);
 `;
 

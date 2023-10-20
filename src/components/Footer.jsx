@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import {recursiveTrees} from "../Contracts"
 
-function Footer() {
+function Footer({address}) {
   return (
     <Container>
-      <a target="blank" href="https://testnets.opensea.io/collection/recursive-trees-63">open sea</a>
-      <a target="blank" href="https://goerli.etherscan.io/address/0xe11150b535926ddd6fa6c16047008c15ce149238" >etherscan</a>
+      <a target="blank" href={`https://testnets.opensea.io/assets/goerli/${recursiveTrees}`}>open sea</a>
+      <a target="blank" href={`https://goerli.etherscan.io/address/${recursiveTrees}`} >etherscan</a>
 
     </Container>
   )

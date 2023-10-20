@@ -32,6 +32,11 @@
   },
   {
     "inputs": [],
+    "name": "ExceedsMaxPerMint",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "ExceedsTreeMax",
     "type": "error"
   },
@@ -57,6 +62,11 @@
   },
   {
     "inputs": [],
+    "name": "MaxFruitReached",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "MintERC2309QuantityExceedsLimit",
     "type": "error"
   },
@@ -68,6 +78,16 @@
   {
     "inputs": [],
     "name": "MintZeroQuantity",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MustWaterWithEth",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "OnlyOwner",
     "type": "error"
   },
   {
@@ -189,25 +209,6 @@
       }
     ],
     "name": "ConsecutiveTransfer",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "previousOwner",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "OwnershipTransferred",
     "type": "event"
   },
   {
@@ -521,13 +522,8 @@
     "outputs": [
       {
         "internalType": "string",
-        "name": "",
+        "name": "code",
         "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -671,6 +667,19 @@
   },
   {
     "inputs": [],
+    "name": "maxFruitTokens",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "name",
     "outputs": [
       {
@@ -680,6 +689,19 @@
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "newOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -750,13 +772,6 @@
         "type": "uint256"
       }
     ],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "renounceOwnership",
-    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -1017,19 +1032,6 @@
     "name": "transferFrom",
     "outputs": [],
     "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "newOwner",
-        "type": "address"
-      }
-    ],
-    "name": "transferOwnership",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {

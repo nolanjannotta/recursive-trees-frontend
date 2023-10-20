@@ -12,16 +12,17 @@ import {
 import Stats from "./Stats";
 import TreeControls from "./TreeControls";
 
+
+
 function Tree({ extraData, treeId, setTreeId, setDisplayPage }) {
   const [isOwner, setIsOwner] = useState(false);
   const [treeInRange, setTreeInRange] = useState(true)
 
 
-  const { treeData, refetch: getTreeData } = useGetTreeData(treeId); 
+  const { treeData, isLoading,  refetch: getTreeData } = useGetTreeData(treeId); 
   
-  const { tokenURI, getUri } = useGetTokenURI(treeId);
+  const {tokenURI, treeJson, getUri } = useGetTokenURI(treeId);
 
-  // console.log(tokenURI)
 
   const { address, isConnecting, isDisconnected } = useAccount();
 
@@ -37,20 +38,38 @@ function Tree({ extraData, treeId, setTreeId, setDisplayPage }) {
       <h1>Tree #{treeId}</h1>
       <Middle>
         <Left>
-          {treeData && !treeData[0].error ? (
-            <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result[0]).toString("base64")} type="image/svg+xml"></SVG>
-          ) : <Error>loading tree</Error>}
+          
+            {isLoading && <Error>loading tree</Error>}
+
+            {treeData && !treeData[0].error && <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
+
+            {treeData && treeData[0].error && !treeJson.image && 
+              <Error>uh oh, looks like `getRawSvg()` failed using this RPC url. This can happen when a tree is particularly large.
+              
+              Feel free to view on open sea or toggle the render method to off chain if you own this tree.
+              
+              </Error>}
+
+            {treeData && treeData[0].error && treeJson.image && <SVG id="svg" data={treeJson.image} type="image/svg+xml"></SVG>}
+
+
+          
+          {/* {treeData && !treeData[0].error ? (
+            <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>
+          ) : <Error>loading tree</Error>} */}
           <Buttons>
             <button disabled={treeId - 1 == 0} onClick={()=> setTreeId((treeId) => --treeId)}>previous</button>
             <button disabled={treeInRange} onClick={()=> setTreeId((treeId) => ++treeId)}>next</button>
           </Buttons>
           
         </Left>
+
         <Right>
           {treeData && <Stats treeData={treeData} treeId={treeId} address={address} isOwner={isOwner} />}
-          {treeData && <TreeControls isOwner={isOwner} treeId={treeId} tokenURI={tokenURI}></TreeControls>}
+          {treeData && <TreeControls isOwner={isOwner} treeId={treeId} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>}
 
         </Right>
+
       </Middle>
 
       <ButtonGroup>
@@ -76,7 +95,8 @@ const Right = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  // background-color: green;
 `
 
 const Left = styled.div`
@@ -106,7 +126,8 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 60px;
+  padding-top: 20px;
+
   
 `;
 

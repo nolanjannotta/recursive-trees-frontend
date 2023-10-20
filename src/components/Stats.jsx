@@ -4,7 +4,8 @@ import { formatEther } from 'viem'
 
 function Stats({treeId, treeData, isOwner}) {
     const colorRarities = ["ultra rare","very rare", "rare", "semi rare","common"]
-    console.log(treeData)
+
+
   return (
     <StatsContainer>
                 <StatList>
@@ -13,7 +14,8 @@ function Stats({treeId, treeData, isOwner}) {
                     <StatBox><h5>color: {colorRarities[Number(treeData[1].result.colorId)-1]}</h5></StatBox>
                     <StatBox><h5>planted on: {new Date(Number(treeData[1].result.plantedAt) * 1000).toLocaleDateString('en-us')}</h5></StatBox>
                     <StatBox><h5>age: {(Number(treeData[1].result.age) / 86400).toFixed(3)} days</h5></StatBox>
-                    <StatBox><h5>next harvest: {new Date(Number(treeData[1].result.nextHarvest) * 1000).toLocaleDateString('en-us')}</h5></StatBox>
+                    {/* <StatBox><h5>next harvest: {new Date(Number(treeData[1].result.nextHarvest) * 1000).toLocaleDateString('en-us')}</h5></StatBox> */}
+                    <StatBox><h5>next harvest: {Math.floor(Number(treeData[1].result.nextHarvest) - Date.now()/1000) > 0 ? Math.floor(Number(treeData[1].result.nextHarvest) - Date.now()/1000) : 0 }s</h5> <h5><small>&#160;&#160;&#160;&#160;&#160;({new Date(Number(treeData[1].result.nextHarvest) * 1000).toLocaleDateString('en-us')}) </small></h5></StatBox>
 
                 </StatList>
                 <StatList>
@@ -33,29 +35,52 @@ function Stats({treeId, treeData, isOwner}) {
 export default Stats
 
 
+const NextHarvest = styled.p`
+position: relative:
+right: 0;
+margin: 0;
+padding: 0;
+flex: none;
+
+
+
+`
+
+
 const StatBox = styled.div`
 border: 1px solid black;
-width: 95%;
-height: 10%;
-text-align: center;
+border-radius: 8px;
+width: 100%;
+height: 15%;
+display: flex;
+justify-content: center;
+align-items: center;
+// flex-grow: 4;
+
 `
+
+
 
 const StatList = styled.div`
 // background-color: yellow;
-width: 50%;
+width: 49%;
 height: 100%;
 display:flex;
 flex-direction: column;
 justify-content: space-between;
+align-items: center;
 
 `
+
+
+   
 const StatsContainer = styled.div`
     // background-color: purple;
     width: 100%;
-    height: 40%;  
+    height: 50%;  
     display:flex;
-    justify-content: start;
-    align-items: start;
+    justify-content: space-between;
+    align-items: space-between;
     // flex-direction: column;
 
 `

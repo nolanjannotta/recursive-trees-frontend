@@ -18,7 +18,7 @@ function Body() {
   const {
     extraData,
     isloading: treeLoading,
-    refetch: getDemoTree,
+    refetch: getExtraData,
   } = useGetExtraData();
 
   console.log(extraData);
@@ -48,7 +48,7 @@ function Body() {
             />
           )}
           {displayPage == 3 && (
-            <Mint extraData={extraData} setDisplayPage={setDisplayPage} />
+            <Mint extraData={extraData} getExtraData={getExtraData} setDisplayPage={setDisplayPage} />
           )}
           {displayPage == 4 && (
             <Tree

@@ -17,6 +17,9 @@ function NavBar() {
     
   return (
     <Container>
+      <Title>
+        Recursive Trees
+      </Title>
       <Account>
         {address ? 
         <p>
@@ -46,7 +49,7 @@ background-color: #b6b6b6;
 width: 100%;
 height: min-content;
 display: flex;
-justify-content: end;
+justify-content: space-between;
 
 `
 
@@ -56,6 +59,13 @@ const Account = styled.div`
 // height: 100%;
 margin-right: 20px;
 // text-align: center;
+
+
+`
+
+const Title = styled.div`
+margin-left: 20px;
+
 
 
 `

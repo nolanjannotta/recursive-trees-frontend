@@ -3,7 +3,7 @@ import { useState } from 'react'
 import '@rainbow-me/rainbowkit/styles.css';
 import {getDefaultWallets,RainbowKitProvider} from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum, goerli } from 'wagmi/chains';
+import { mainnet, polygon, optimism, arbitrum, goerli, foundry } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import './App.css'
@@ -22,7 +22,7 @@ function App() {
 
 
   const { chains, publicClient } = configureChains(
-    [goerli],
+    [goerli, foundry],
     [
       alchemyProvider({ apiKey: "RMv47zcgxW5yjSyfRQjPHCru9rJyNiuK" }),
       publicProvider()

@@ -1,39 +1,88 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { usePlantTree } from '../hooks/usePlantTree'
 import {formatEther, parseEther} from "viem"
-import { useAccount } from 'wagmi'
+import { useAccount,useWaitForTransaction  } from 'wagmi'
 
 
-function Mint({extraData, setDisplayPage}) {
+function Mint({extraData, getExtraData, setDisplayPage}) {
   const [batchTotal, setBatchTotal] = useState(1)
   const {address} = useAccount();
-  const {plantTreeWrite,batchPlantTree} = usePlantTree(batchTotal, Number(extraData[5].result))
+  
+  const [loadingText, setLoadingText] = useState("");
 
+  console.log(Number(formatEther(extraData[8].result)));
+
+  function handleSuccess(data) {
+    getExtraData();
+    // setLoading(false);
+    setLoadingText("success!")
+  }
+
+  function refresh() {
+    getExtraData();
+    // setLoading(false);
+    setLoadingText("")
+  }
+
+
+
+  const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite} = usePlantTree(batchTotal, Number(extraData[5].result),handleSuccess)
+  // const [loading, setLoading] = useState(plantTreeWrite.isLoading || batchPlantTree.isLoading);
+  
   let isMinting = extraData[2].result <= extraData[1].result
 
   function handleInput(event) {
     setBatchTotal(event.target.value)
 }
 
+useEffect(() => {
+  if(plantTreeWrite.isSuccess || batchPlantTree.isSuccess) {
+    // setLoading(false);
+    setLoadingText("tx submitted. awaiting results...")
+  }
+  if(plantTreeWrite.isError || batchPlantTree.isError) {
+    // setLoading(false);
+    setLoadingText("error occured, try again")
+  }
+
+
+},[plantTreeWrite.isSuccess,batchPlantTree.isSuccess,plantTreeWrite.isError,batchPlantTree.isError])
+
 
   return (
     <Container>
       <h1>plant a tree</h1>
       <Info>
+        
         <P>price: {formatEther(extraData[5].result.toString())} eth</P>
+
+        <TotalMinted>
         <P>{(extraData[2].result).toString()} / {extraData[1].result.toString()} minted</P> 
+
+         
+
+        <P style={{cursor: "pointer", fontSize: "10px"}} onClick={refresh}>refresh</P>
+        </TotalMinted>
+
+        <P>{(extraData[7].result).toString()} / 2000 bonus trees planted</P>
+
+        <P>{!address &&  "please connect a wallet to mint"}</P>
+        <P>{loadingText}</P>
+
       </Info>
-      { !address &&  <p>please connect a wallet to mint</p>}
-      <Buttons>    
+     
+      <Buttons>     
           
-          <button disabled={!isMinting || !address} onClick={plantTreeWrite.write}>mint 1</button>
+          <button disabled={!isMinting || !address} onClick={()=>{setLoadingText("awaiting user confirmation..."); plantTreeWrite.write()}}>plant 1</button>
           
 
           <Batch>
-            <Input placeholder='amount' type="number" max={20} onChange={handleInput}></Input>
-            <button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 20} onClick={batchPlantTree.write}>mint batch (20 max)</button>
+            <Input placeholder='amount' type="number" max={100} onChange={handleInput}></Input>
+            <button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 100} onClick={()=>{setLoadingText("awaiting user confirmation...");batchPlantTree.write()}}>plant batch (100 max)</button>
           </Batch>
+
+          <button disabled={Number(formatEther(extraData[8].result)) < 1000} onClick={()=>{setLoadingText("awaiting user confirmation..."); fruitTokenPlantTreeWrite.write()}}>plant with fruit tokens (1000 fruit)</button>
           
           
       </Buttons> 
@@ -69,16 +118,27 @@ const Buttons = styled.div`
 `
 
 const Input = styled.input`
+
   width: 15%;
   // height: 10%;
 
 
 `
 
+const TotalMinted = styled.div`
+// background-color: yellow;
+// width: 20%;
+display:flex;
+// justify-content: space-between;
+
+
+`
+
 
 const Info = styled.div`
-// background-color: blue;
+// background-color: orange;
 width: 50%;
+height: 50%;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -88,7 +148,13 @@ flex-direction: column;
 `
 
 const P = styled.p`
-margin: 20px;
+// margin: 20px;
+// background-color: blue;
+display: flex;
+justify-content: center;
+align-items: center;
+// height: 80px;
+padding: 0 10px 0 10px;
 `
 
 
@@ -102,3 +168,5 @@ flex-direction: column;
 // background-color: orange;
 
 `
+
+

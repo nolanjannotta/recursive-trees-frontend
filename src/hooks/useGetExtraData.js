@@ -52,7 +52,18 @@ export function useGetExtraData() {
           },
           {...treeContract,
             functionName: 'tokensOfOwner',
-            args:[address],}
+            args:[address],
+          },
+          {...treeContract,
+            functionName: 'EXTRA_TREE_COUNTER',
+          },
+          {...fruitContract,
+            functionName: 'balanceOf',
+            args:[address],
+          },
+          {...fruitContract,
+            functionName: 'totalSupply'
+          }
         ],
         // enabled: true,
         onSuccess(data) {

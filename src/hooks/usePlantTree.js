@@ -5,7 +5,7 @@ import { formatEther, parseEther } from 'viem'
 
 import treeABI from '../ABIs/treeABI.json'
 
-export function usePlantTree(batchAmount, price) {
+export function usePlantTree(batchAmount, price, callback) {
     const [txHash, setTxHash] = useState("")
 
     const contract = {
@@ -28,9 +28,26 @@ export function usePlantTree(batchAmount, price) {
 
       })
 
-      const batchPlantTree = useContractWrite({...batchPlantConfig, onSuccess(data) {setTxHash(data.hash)}})
+      const { config: fruitTokenPlantConfig, error: fruitTokenPlantError } = usePrepareContractWrite({
+        ...contract,
+        functionName: 'plantTreeWithFruitTokens',
 
-      const plantTreeWrite = useContractWrite({...plantTreeConfig, onSuccess(data) {setTxHash(data.hash)}})
+      })
+
+      const batchPlantTree = useContractWrite({...batchPlantConfig})
+
+      const plantTreeWrite = useContractWrite({...plantTreeConfig})
+
+      const fruitTokenPlantTreeWrite = useContractWrite({...fruitTokenPlantConfig})
+
+      const { data, isError, isLoading } = useWaitForTransaction({
+        hash: plantTreeWrite.data?.hash || batchPlantTree.data?.hash || fruitTokenPlantTreeWrite.data?.hash,
+        onSuccess(data) {callback(data)}
+
+      })
+      
+
+      console.log()
 
       // const waitForTransaction = useWaitForTransaction({
       //   hash: txHash,
@@ -48,5 +65,5 @@ export function usePlantTree(batchAmount, price) {
     //   },[waitForTransaction.isSuccess])
     
     
-  return {plantTreeWrite, batchPlantTree}
+  return {plantTreeWrite, batchPlantTree,fruitTokenPlantTreeWrite}
 }

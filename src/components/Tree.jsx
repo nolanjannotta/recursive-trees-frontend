@@ -20,8 +20,8 @@ function Tree({ extraData, treeId, setTreeId, setDisplayPage }) {
 
 
   const { treeData, isLoading,  refetch: getTreeData } = useGetTreeData(treeId); 
-  
   const {tokenURI, treeJson, getUri } = useGetTokenURI(treeId);
+  console.log(treeData)
 
 
   const { address, isConnecting, isDisconnected } = useAccount();

@@ -1,6 +1,5 @@
 
-
-// // // ANVIL
+// // ANVIL
 // export const recursiveTrees = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
 
 // export const fruitToken = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; 
@@ -13,9 +12,12 @@
 
 
 
-export const recursiveTrees = "0xD8Ae98223c79D69CdCBd9eB2dD76DfC895Ea39F2" // newest
+// export const recursiveTrees = "0xD8Ae98223c79D69CdCBd9eB2dD76DfC895Ea39F2" // newest
 
-export const fruitToken = "0x67e25CE519324c2dcC5192ED0b41A9f6e9c5566c"; 
+// export const fruitToken = "0x67e25CE519324c2dcC5192ED0b41A9f6e9c5566c"; 
 
 
+export const recursiveTrees = "0x600C9Ef9F2134b14Ec3B8c10A25725f24113145e" // newest
+
+export const fruitToken = "0x68043437A3b25b41B03C050f1a0a97e7510d120d"; 
 

@@ -5,7 +5,6 @@ import { formatEther } from 'viem'
 function Stats({treeId, treeData, isOwner}) {
     const colorRarities = ["ultra rare","very rare", "rare", "semi rare","common"]
 
-
   return (
     <StatsContainer>
                 <StatList>
@@ -21,7 +20,7 @@ function Stats({treeId, treeData, isOwner}) {
                 <StatList>
                     <StatBox><h5> percent grown: {Number(treeData[1].result.percentGrown) / 100}</h5></StatBox>
                     <StatBox><h5> render method: { treeData[1].result.renderMethod ? "off chain" : "on chain"}</h5></StatBox>
-                    <StatBox><h5>current fruit total: { Number(treeData[1].result.currentFruit)}</h5></StatBox>
+                    <StatBox><h5>current fruit total: { Number(treeData[3].result)}</h5></StatBox>
                     <StatBox><h5>total harvested: {Number(treeData[1].result.totalHarvested)}</h5></StatBox>
                     <StatBox><h5>eth received: {formatEther(treeData[1].result.ethReceived)}</h5></StatBox>
                     <StatBox><h5>clouds: {treeData[1].result.clouds ? "yes" : "no"} </h5></StatBox>

@@ -4,14 +4,15 @@ import { usePlantTree } from '../hooks/usePlantTree'
 import {formatEther, parseEther} from "viem"
 import { useAccount,useWaitForTransaction  } from 'wagmi'
 
+import {useConnectModal} from "@rainbow-me/rainbowkit";
+
 
 function Mint({extraData, getExtraData, setDisplayPage}) {
   const [batchTotal, setBatchTotal] = useState(1)
   const {address} = useAccount();
-  
+  const { openConnectModal } = useConnectModal();
   const [loadingText, setLoadingText] = useState("");
 
-  console.log(Number(formatEther(extraData[8].result)));
 
   function handleSuccess(data) {
     getExtraData();
@@ -67,7 +68,7 @@ useEffect(() => {
 
         <P>{(extraData[7].result).toString()} / 2000 bonus trees planted</P>
 
-        <P>{!address &&  "please connect a wallet to mint"}</P>
+        <PleaseConnect onClick={openConnectModal}>{!address &&  "please connect a wallet to mint"}</PleaseConnect>
         <P>{loadingText}</P>
 
       </Info>
@@ -82,7 +83,7 @@ useEffect(() => {
             <button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 100} onClick={()=>{setLoadingText("awaiting user confirmation...");batchPlantTree.write()}}>plant batch (100 max)</button>
           </Batch>
 
-          <button disabled={Number(formatEther(extraData[8].result)) < 1000} onClick={()=>{setLoadingText("awaiting user confirmation..."); fruitTokenPlantTreeWrite.write()}}>plant with fruit tokens (1000 fruit)</button>
+          <button disabled={!extraData[8].result || Number(formatEther(extraData[8].result)) < 1000} onClick={()=>{setLoadingText("awaiting user confirmation..."); fruitTokenPlantTreeWrite.write()}}>plant with fruit tokens (1000 fruit)</button>
           
           
       </Buttons> 
@@ -92,6 +93,13 @@ useEffect(() => {
 }
 
 export default Mint
+
+
+const PleaseConnect = styled.div`
+cursor: pointer;
+
+
+`
 
 
 const Batch = styled.div`

@@ -24,16 +24,16 @@ export function useGetTreeData(treeId) {
             functionName: 'getTreeData',
             args: [treeId]
           },
-          // {
-          //   ...treeContract,
-          //   functionName: 'tokenURI',
-          //   args: [treeId]
-          // },
           {
             ...treeContract,
             functionName: 'ownerOf',
             args: [treeId]
           },
+          {
+            ...treeContract,
+            functionName: 'calculateFruit',
+            args: [treeId]
+          }
 
         ],
         enabled: true,

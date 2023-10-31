@@ -18,7 +18,6 @@ function TreeControls({ isOwner, treeId, treeJson, tokenURI, nextHarvest}) {
   
     useEffect(()=>{
       const timestamp = Date.now()/1000;
-        console.log(timestamp, nextHarvest)
       if(timestamp < nextHarvest && timestamp > nextHarvest - 604800) {
         setHarvestTimes({harvest: false, pick: true})
         return
@@ -33,13 +32,7 @@ function TreeControls({ isOwner, treeId, treeJson, tokenURI, nextHarvest}) {
 
     },[nextHarvest])
 
-    useEffect(()=>{
 
-      console.log(harvestTimes)
-
-    },[harvestTimes])
-
-    console.log(harvestTimes)
 
   return (
     <Controls>

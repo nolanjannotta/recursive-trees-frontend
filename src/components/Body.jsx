@@ -21,7 +21,6 @@ function Body() {
     refetch: getExtraData,
   } = useGetExtraData();
 
-  console.log(extraData);
 
   // console.log(extraData)
 

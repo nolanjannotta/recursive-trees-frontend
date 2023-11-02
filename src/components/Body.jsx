@@ -87,15 +87,12 @@ flex-direction: column;
 `
 
 const Container = styled.div`
-  // margin-top: 3%;
-  // padding-top: 5%;
   width: 80%;
   height: 80%;
   display: flex;
-  // justify-content: flex-start;
   flex-direction: column;
-  align-items: center;
-
+  // align-items: center;
+  // margin: 20px 0px 20px 0px;
   background-color: #b6b6b6;
   border: 2px solid black;
   overflow-y: scroll;

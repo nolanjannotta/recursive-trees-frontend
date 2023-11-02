@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 // import { ConnectButton } from '@rainbow-me/rainbowkit';
 import {
-  useConnectModal,
-  useAccountModal,
-  useChainModal,
+  useConnectModal
 } from "@rainbow-me/rainbowkit";
 
 function Home({ extraData, setDisplayPage }) {
@@ -215,23 +213,15 @@ const ButtonGroup = styled.div`
 `;
 
 const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  // background-color: blue;
   display: flex;
   // justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  // margin-top: 200px;
+  
   // overflow-y: scroll;
 `;
 
-const Object = styled.object`
-  background-color: orange;
-`;
-
 const Demo = styled.div`
-  // margin-top: 680px;
   height: 100%;
   display: flex;
   align-items: center;

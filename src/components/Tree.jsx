@@ -66,7 +66,7 @@ function Tree({ extraData, treeId, setTreeId, setDisplayPage }) {
 
         <Right>
           {treeData && <Stats treeData={treeData} treeId={treeId} address={address} isOwner={isOwner} />}
-          {treeData && <TreeControls isOwner={isOwner} treeId={treeId} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>}
+          {treeData && <TreeControls address={address} isOwner={isOwner} treeId={treeId} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>}
 
         </Right>
 

@@ -2,14 +2,29 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useContractWrites } from "../hooks/useContractWrites";
 import {recursiveTrees} from '../Contracts.js' 
+import treeABI from '../ABIs/treeABI.json'
+import {useContractWrite} from 'wagmi'
 
-function TreeControls({ isOwner, treeId, treeJson, tokenURI, nextHarvest}) {
+
+function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest}) {
   const [waterAmount, setWaterAmount] = useState(0);
 
+  const [transferAddress, setTransferAddress] = useState("");
+
   const [harvestTimes, setHarvestTimes] = useState({harvest: false, pick: false})
+
   function handleInput(event) {
     setWaterAmount(event.target.value);
   }
+
+
+  const transfer = useContractWrite({
+    address: recursiveTrees,
+    abi: treeABI,
+    functionName: 'transferFrom',
+    args: [address, transferAddress,treeId]
+  })
+
 
 
   const { harvestWrite, pickFruitWrite, waterWrite, renderForIdWrite } =
@@ -65,11 +80,17 @@ function TreeControls({ isOwner, treeId, treeJson, tokenURI, nextHarvest}) {
 
 
         <ButtonRow>
-
+        <ButtonBox>
         <Link style={{fontColor: "none"}} href={`https://testnets.opensea.io/assets/goerli/${recursiveTrees}/${treeId}`} target="blank">
         <Button>opensea</Button>
-        
         </Link>
+        </ButtonBox>
+
+
+        <ButtonBox> 
+          <TransferInput type="string" onWheel={(e) => e.preventDefault} value={transferAddress} onChange={(event)=>{setTransferAddress(event.target.value)}}></TransferInput>
+          <Button disabled={!isOwner} onClick={transfer.write}>Transfer</Button>
+        </ButtonBox>
       </ButtonRow>
 
 
@@ -144,3 +165,9 @@ const Input = styled.input`
   width: 10%;
   margin: 0;
 `;
+
+const TransferInput = styled.input`
+width: 90%;
+margin: 0;
+
+`

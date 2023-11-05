@@ -1,4 +1,3 @@
-import {useState, useEffect} from 'react'
 import { useContractReads, useAccount } from 'wagmi'
 import {recursiveTrees,fruitToken} from '../Contracts.js'
 
@@ -6,7 +5,7 @@ import treeABI from '../ABIs/treeABI.json'
 import fruitABI from '../ABIs/fruitABI.json'
 
 export function useGetExtraData() {
-    const [extraData, setExtraData] = useState("")
+    // const [extraData, setExtraData] = useState({})
     const {address} = useAccount();
 
     const treeContract = {
@@ -21,7 +20,7 @@ export function useGetExtraData() {
 
     //   add fruit token contract
 
-      const {isLoading, refetch } = useContractReads({
+      const {data: extraData, isLoading, refetch } = useContractReads({
         contracts: [
           {
             ...treeContract,
@@ -64,12 +63,12 @@ export function useGetExtraData() {
           {...fruitContract,
             functionName: 'totalSupply'
           }
-        ],
-        // enabled: true,
-        onSuccess(data) {
-            // console.log('Extra data', data)
-            setExtraData(data)
-          },
+        ]
+        // // enabled: true,
+        // onSuccess(data) {
+        //     console.log('Extra data', data)
+        //     setExtraData(data)
+        //   },
       })
 
   return {extraData, isLoading, refetch}

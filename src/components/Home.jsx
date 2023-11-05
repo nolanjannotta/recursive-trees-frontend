@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-// import { ConnectButton } from '@rainbow-me/rainbowkit';
-import {
-  useConnectModal
-} from "@rainbow-me/rainbowkit";
+import {useConnectModal} from "@rainbow-me/rainbowkit";
+import {DataContext} from './DataContext'
+import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
-function Home({ extraData, setDisplayPage }) {
+function Home() {
   const { openConnectModal } = useConnectModal();
+
+  const {extraData} = useContext(DataContext);
+
+  if(!extraData) {
+    return(
+      <Loading/>
+    )
+  }
 
   return (
     <Container>
@@ -19,29 +27,22 @@ function Home({ extraData, setDisplayPage }) {
               Buffer.from(extraData[0].result).toString("base64")
             }
             width="50%"
-            // height="100%"
             type="image/svg+xml"
           ></object>) : (<p>error loading tree #1</p>)
       
       }
 
         <ButtonGroup>
-          <button onClick={() => {setDisplayPage(2);}}>search</button>
+          <Link to="/search"><button>search</button></Link>
 
-          <button onClick={() => {setDisplayPage(3);}}>plant</button>
+          <Link to="/plant"><button>plant</button></Link>
           
 
           {openConnectModal ? 
           
           (<button onClick={openConnectModal} type="button">connect</button>) : 
         
-          (<button
-            onClick={() => {
-              setDisplayPage(5);
-            }}
-          >
-            wallet
-          </button>)}
+          (<Link to="/wallet"><button>wallet</button></Link>)}
 
 
 

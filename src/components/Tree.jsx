@@ -1,80 +1,87 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useGetTreeData } from "../hooks/useGetTreeData";
 import { useGetTokenURI } from "../hooks/useGetTokenURI";
-import { useContractWrites } from "../hooks/useContractWrites";
 import styled from "styled-components";
-import {
-  useAccount,
-  useBalance,
-  useWaitForTransaction,
-  useContractRead,
-} from "wagmi";
+import {useAccount} from "wagmi";
 import Stats from "./Stats";
 import TreeControls from "./TreeControls";
+import { useParams } from "react-router-dom";
+
+import {DataContext} from './DataContext'
+import { Link } from "react-router-dom";
+import TreeNotFound from "./TreeNotFound";
+import Loading from "./Loading";
 
 
 
-function Tree({ extraData, treeId, setTreeId, setDisplayPage }) {
-  const [isOwner, setIsOwner] = useState(false);
+function Tree() {
+  // const [isOwner, setIsOwner] = useState(false);
   const [treeInRange, setTreeInRange] = useState(true)
 
+  let {id} = useParams();
 
-  const { treeData, isLoading,  refetch: getTreeData } = useGetTreeData(treeId); 
-  const {tokenURI, treeJson, getUri } = useGetTokenURI(treeId);
-  console.log(treeData)
-
-
-  const { address, isConnecting, isDisconnected } = useAccount();
+  const {extraData} = useContext(DataContext);
 
 
-  useEffect(() => {
-    treeData && setIsOwner(treeData[2].result == address); 
-    setTreeInRange(++treeId > (extraData[2].result))
+  const { treeData, isLoading,  refetch: getTreeData } = useGetTreeData(id); 
 
-  }, [treeData,extraData]);
+  const {tokenURI, treeJson, getUri } = useGetTokenURI(id);
+
+
+  const { address } = useAccount();
+
+  const isOwner = treeData ? treeData[2].result == address : false;
+
+
+  if(!extraData || !treeData ) {
+    return(
+      <Loading/>
+    )
+  }
+
+  if(extraData && id > extraData[2].result || !Number(id)) {
+    return(
+      <TreeNotFound/>
+    )
+  }
 
   return (
     <Container>
-      <h1>Tree #{treeId}</h1>
+      <h1>Tree #{id}</h1>
       <Middle>
         <Left>
           
             {isLoading && <Error>loading tree</Error>}
 
-            {treeData && !treeData[0].error && <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
+            {!treeData[0].error && <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
 
-            {treeData && treeData[0].error && !treeJson.image && 
+            {treeData[0].error && !treeJson && 
               <Error>uh oh, looks like `getRawSvg()` failed using this RPC url. This can happen when a tree is particularly large.
               
               Feel free to view on open sea or toggle the render method to off chain if you own this tree.
               
               </Error>}
 
-            {treeData && treeData[0].error && treeJson.image && <SVG id="svg" data={treeJson.image} type="image/svg+xml"></SVG>}
+            {treeData[0].error && treeJson && <SVG id="svg" data={treeJson.image} type="image/svg+xml"></SVG>}
 
-
-          
-          {/* {treeData && !treeData[0].error ? (
-            <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>
-          ) : <Error>loading tree</Error>} */}
           <Buttons>
-            <button disabled={treeId - 1 == 0} onClick={()=> setTreeId((treeId) => --treeId)}>previous</button>
-            <button disabled={treeInRange} onClick={()=> setTreeId((treeId) => ++treeId)}>next</button>
+            <Link to={`/tree/${Number(id) - 1}`}><button disabled={Number(id) == 1} >previous</button></Link>
+            <Link to={`/tree/${Number(id) + 1}`}><button disabled={Number(id) == extraData[2].result} >next</button></Link>
           </Buttons>
           
         </Left>
 
         <Right>
-          {treeData && <Stats treeData={treeData} treeId={treeId} address={address} isOwner={isOwner} />}
-          {treeData && <TreeControls address={address} isOwner={isOwner} treeId={treeId} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>}
+          <Stats treeData={treeData} treeId={id} address={address} isOwner={isOwner} />
+          <TreeControls address={address} isOwner={isOwner} treeId={id} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>
 
         </Right>
 
       </Middle>
 
       <ButtonGroup>
+      <Link to="/search"><button>back</button></Link>
         <button onClick={() => {getUri(); getTreeData();}}>refresh</button>
-        <button onClick={() => {setDisplayPage(2);}}>back</button>
       </ButtonGroup>
 
     </Container>

@@ -1,38 +1,42 @@
-import React,{useEffect, useState} from 'react'
+import React,{useEffect, useState, useContext} from 'react'
 import styled from 'styled-components'
 import { usePlantTree } from '../hooks/usePlantTree'
-import {formatEther, parseEther} from "viem"
-import { useAccount,useWaitForTransaction  } from 'wagmi'
-
+import {formatEther} from "viem"
+import { useAccount} from 'wagmi'
+import {DataContext} from './DataContext'
+import {Link} from "react-router-dom";
+import Loading from "./Loading";
 import {useConnectModal} from "@rainbow-me/rainbowkit";
 
 
-function Mint({extraData, getExtraData, setDisplayPage}) {
+function Mint() {
   const [batchTotal, setBatchTotal] = useState(1)
   const {address} = useAccount();
   const { openConnectModal } = useConnectModal();
   const [loadingText, setLoadingText] = useState("");
 
+  const {extraData, refetch} = useContext(DataContext);
+
 
   function handleSuccess(data) {
-    getExtraData();
+    refetch();
     // setLoading(false);
     setLoadingText("success!")
   }
 
   function refresh() {
-    getExtraData();
+    refetch();
     // setLoading(false);
     setLoadingText("")
   }
 
 
 
-  const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite} = usePlantTree(batchTotal, Number(extraData[5].result),handleSuccess)
+  const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite} = usePlantTree(batchTotal, Number(extraData && extraData[5].result) || 0,handleSuccess)
   // const [loading, setLoading] = useState(plantTreeWrite.isLoading || batchPlantTree.isLoading);
   
-  let isMinting = extraData[2].result <= extraData[1].result
-
+  let isMinting = extraData ? extraData[2].result <= extraData[1].result : false
+ 
   function handleInput(event) {
     setBatchTotal(event.target.value)
 }
@@ -50,6 +54,11 @@ useEffect(() => {
 
 },[plantTreeWrite.isSuccess,batchPlantTree.isSuccess,plantTreeWrite.isError,batchPlantTree.isError])
 
+if(!extraData) {
+  return(
+    <Loading/>
+  )
+}
 
   return (
     <Container>
@@ -87,7 +96,7 @@ useEffect(() => {
           
           
       </Buttons> 
-<button onClick={() => {setDisplayPage(1)}}>back</button> 
+      <Link to="/home"><button>back</button> </Link>
     </Container>
   )
 }

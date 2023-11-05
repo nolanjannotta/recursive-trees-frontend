@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import { useContractRead, useAccount } from 'wagmi'
 import {recursiveTrees} from '../Contracts.js'
 

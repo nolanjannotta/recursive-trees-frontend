@@ -1,16 +1,10 @@
-import React, {useState} from 'react'
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-// import {useGetTree} from '../hooks/useTokenUri'
+import React from 'react'
 import styled from 'styled-components';
 import { useAccount,useBalance, useEnsName, useContractWrite} from 'wagmi'
 import { recursiveTrees } from '../Contracts';
 import treeABI from '../ABIs/treeABI.json'
 
-import {
-  useConnectModal,
-  useAccountModal,
-  useChainModal,
-} from "@rainbow-me/rainbowkit";
+import {useConnectModal} from "@rainbow-me/rainbowkit";
 
 
 

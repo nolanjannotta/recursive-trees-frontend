@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useContractWrites } from "../hooks/useContractWrites";
+import { useTreeWrites } from "../hooks/useTreeWrites";
 import {recursiveTrees} from '../Contracts.js' 
-import treeABI from '../ABIs/treeABI.json'
-import {useContractWrite} from 'wagmi'
 
 
 function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest}) {
@@ -18,17 +16,8 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
   }
 
 
-  const transfer = useContractWrite({
-    address: recursiveTrees,
-    abi: treeABI,
-    functionName: 'transferFrom',
-    args: [address, transferAddress,treeId]
-  })
 
-
-
-  const { harvestWrite, pickFruitWrite, waterWrite, renderForIdWrite } =
-    useContractWrites(treeId, waterAmount);
+  const { harvestWrite, pickFruitWrite, waterWrite, renderForIdWrite, transferFromWrite } = useTreeWrites(treeId, waterAmount);
 
   
     useEffect(()=>{
@@ -56,7 +45,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
         <ButtonBox><Button disabled={!isOwner} onClick={renderForIdWrite.write}>Toggle render method</Button></ButtonBox>
 
             <ButtonBox>
-            <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={handleInput}></Input>
+            <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={()=>{setWaterAmount(event.target.value)}}></Input>
             <Button onClick={waterWrite.write}>water</Button>
             </ButtonBox>
 
@@ -89,7 +78,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
         <ButtonBox> 
           <TransferInput type="string" onWheel={(e) => e.preventDefault} value={transferAddress} onChange={(event)=>{setTransferAddress(event.target.value)}}></TransferInput>
-          <Button disabled={!isOwner} onClick={transfer.write}>Transfer</Button>
+          <Button disabled={!isOwner} onClick={() => {transferFromWrite.write({args:[address, transferAddress, treeId]})}}>Transfer</Button>
         </ButtonBox>
       </ButtonRow>
 
@@ -97,7 +86,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
       <OutOfGas>
         {!tokenURI &&
-          <small><h5>oof, looks like tokenURI() ran out of gas :( if you want, toggle render method to 'off chain' and hit refresh</h5></small> }
+          <small><h5>oof, looks like tokenURI() ran out of gas using the provided RPC url :( if you own this tree, you can toggle render method to 'off chain' and hit refresh</h5></small> }
       </OutOfGas>
     </Controls>
   );

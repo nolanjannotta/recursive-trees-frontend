@@ -1,12 +1,10 @@
-import React,{useEffect, useState} from 'react'
+import {useState} from 'react'
 import { useContractWrite,usePrepareContractWrite, useWaitForTransaction } from 'wagmi'
 import {recursiveTrees} from '../Contracts.js'
-import { formatEther, parseEther } from 'viem'
 
 import treeABI from '../ABIs/treeABI.json'
 
 export function usePlantTree(batchAmount, price, callback) {
-    const [txHash, setTxHash] = useState("")
 
     const contract = {
         address: recursiveTrees,

@@ -13,7 +13,6 @@ function Stats({treeId, treeData, isOwner}) {
                     <StatBox><h5>color: {colorRarities[Number(treeData[1].result.colorId)-1]}</h5></StatBox>
                     <StatBox><h5>planted on: {new Date(Number(treeData[1].result.plantedAt) * 1000).toLocaleDateString('en-us')}</h5></StatBox>
                     <StatBox><h5>age: {(Number(treeData[1].result.age) / 86400).toFixed(3)} days</h5></StatBox>
-                    {/* <StatBox><h5>next harvest: {new Date(Number(treeData[1].result.nextHarvest) * 1000).toLocaleDateString('en-us')}</h5></StatBox> */}
                     <StatBox><h5>next harvest: {Math.floor(Number(treeData[1].result.nextHarvest) - Date.now()/1000) > 0 ? Math.floor(Number(treeData[1].result.nextHarvest) - Date.now()/1000) : 0 }s</h5> <h5><small>&#160;&#160;&#160;&#160;&#160;({new Date(Number(treeData[1].result.nextHarvest) * 1000).toLocaleDateString('en-us')}) </small></h5></StatBox>
 
                 </StatList>

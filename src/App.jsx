@@ -3,7 +3,7 @@ import { useState } from 'react'
 import '@rainbow-me/rainbowkit/styles.css';
 import {getDefaultWallets,RainbowKitProvider} from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum, goerli, foundry } from 'wagmi/chains';
+import { mainnet, goerli, foundry } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 import './App.css'
@@ -14,12 +14,12 @@ import Footer from './components/Footer.jsx';
 import styled from 'styled-components'; 
 import treeCollage2 from './assets/treeCollage2.png';
 
+import {Route, Routes} from 'react-router-dom'
+
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
-
 
   const { chains, publicClient } = configureChains(
     [goerli, foundry],
@@ -46,9 +46,7 @@ function App() {
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
         <Background>
-          <NavBar/>
           <Body/>
-          <Footer/>
         </Background>
       </RainbowKitProvider>
     </WagmiConfig>

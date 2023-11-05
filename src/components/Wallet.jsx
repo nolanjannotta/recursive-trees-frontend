@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import {useAccount} from "wagmi";
-import {formatEther, parseEther} from "viem"
+import {formatEther} from "viem"
+import {useAccountModal} from "@rainbow-me/rainbowkit";
+import {DataContext} from './DataContext'
+import {Link} from "react-router-dom";
 
-import {
-    useConnectModal,
-    useAccountModal,
-    useChainModal,
-  } from "@rainbow-me/rainbowkit";
-
-
-function Wallet({setDisplayPage, extraData}) {
+function Wallet() {
     
     const { address, isConnecting, isDisconnected } = useAccount();
+    const {extraData, refetch} = useContext(DataContext);
 
     const { openAccountModal } = useAccountModal();
     const [ids, setIds] = useState({
@@ -21,7 +18,7 @@ function Wallet({setDisplayPage, extraData}) {
     });
 
     useEffect(()=>{
-      if(extraData[6].result) {
+      if(extraData && extraData[6].result) {
 
         setIds({
           ids: extraData[6].result.length > 20 ? extraData[6].result.slice(0,20) : extraData[6].result,
@@ -61,7 +58,7 @@ function Wallet({setDisplayPage, extraData}) {
         
         
         <ButtonGroup>
-        <button onClick={() => {setDisplayPage(1)}}> back</button> 
+        <Link to="/home"><button> back</button> </Link>
 
            {openAccountModal && (
         <button onClick={() => {openAccountModal()}} type="button">

@@ -1,12 +1,19 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components'
+// import { DataContext } from './Body';
+import { Link } from 'react-router-dom'
 
+function Enter() {
 
-function Enter({setDisplayPage}) {
+  // const data = useContext(DataContext);
+  // console.log(data)
+
   return (
     <Container>
       <h1>Recursive Trees</h1>
-        <button onClick={() => {setDisplayPage(1)}}>enter</button>
+        <Link to="/home">
+        <button>enter</button>
+        </Link>
     </Container>
   )
 }

@@ -5,19 +5,8 @@
 // export const fruitToken = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; 
 
 //goerli 
-// export const recursiveTrees = "0x45e953C904292F505C522fbF48282b834daE650D" // closer to harvest
-
-// export const fruitToken = "0xF496E46D5d40DD3Fa81C96a9a18A9ca6cad4cc6F"; 
 
 
+export const recursiveTrees = "0x695Ed0471901a16559dCFCB32564373bf3b13ee4" // newest
 
-
-// export const recursiveTrees = "0xD8Ae98223c79D69CdCBd9eB2dD76DfC895Ea39F2" // newest
-
-// export const fruitToken = "0x67e25CE519324c2dcC5192ED0b41A9f6e9c5566c"; 
-
-
-export const recursiveTrees = "0x600C9Ef9F2134b14Ec3B8c10A25725f24113145e" // newest
-
-export const fruitToken = "0x68043437A3b25b41B03C050f1a0a97e7510d120d"; 
-
+export const fruitToken = "0xC30EaAcD526a33B39ddB9F38eE6689934B7c63BA"; 

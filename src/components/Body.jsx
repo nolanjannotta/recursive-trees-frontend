@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
 import styled from "styled-components";
+
+import {DataProvider} from './DataContext'
+
 
 import Home from "./Home";
 import Search from "./Search";
@@ -7,62 +10,91 @@ import Mint from "./Mint";
 import Tree from "./Tree";
 import Enter from "./Enter";
 import Wallet from "./Wallet";
-import { useGetExtraData } from "../hooks/useGetExtraData";
-import { useGetUserTrees } from "../hooks/useGetUserTrees";
+import NavBar from "./NavBar";
+import Footer from "./Footer";
+
+
+import {Routes, Route} from 'react-router-dom';
+import InvalidUrl from "./InvalidUrl";
+
+// export const DataContext = createContext({});
+
 
 function Body() {
-  const [displayPage, setDisplayPage] = useState(0);
 
   const [treeId, setTreeId] = useState(0);
 
-  const {
-    extraData,
-    isloading: treeLoading,
-    refetch: getExtraData,
-  } = useGetExtraData();
+  // const data = useGetExtraData();
 
-
-  // console.log(extraData)
-
-  // const [demoTree, setDemoTree] = useState("")
+  // console.log(data)
 
   return (
     <>
-      {displayPage == 0 && <Enter setDisplayPage={setDisplayPage} />}
-      {displayPage == 5 &&  (
-            <Wallet
-              setDisplayPage={setDisplayPage}
-              extraData={extraData}
-            />
-          )}
+    <NavBar/>
 
-      {displayPage > 0 && displayPage < 5 && (
-        <Container>
-          {displayPage == 1 && <Home extraData={extraData} setDisplayPage={setDisplayPage} />}
-          {displayPage == 2 && (
-            <Search
-              extraData={extraData}
-              setDisplayPage={setDisplayPage}
-              setTreeId={setTreeId}
-            />
-          )}
-          {displayPage == 3 && (
-            <Mint extraData={extraData} getExtraData={getExtraData} setDisplayPage={setDisplayPage} />
-          )}
-          {displayPage == 4 && (
-            <Tree
-              extraData={extraData}
-              setDisplayPage={setDisplayPage}
-              setTreeId={setTreeId}
-              treeId={treeId}
-            />
-          )}
+    <Routes>
+      <Route path="/" element={<Enter/>}/>
+      <Route path="/wallet" element={<Wallet/>}/>
+    </Routes>
+
+    <DataProvider>
+    <Routes>  
+      <Route path="/home" element={<Container><Home/></Container> }/>
+      <Route path="/plant" element={<Container><Mint/></Container> }/>
+      <Route path="/search" element={<Container><Search/></Container> }/>
+      
+      <Route path="/tree/:id" element={<Container><Tree/></Container> }/>
+
+      <Route path="*" element={<InvalidUrl/>}/>
+
+    </Routes>
+            
+    </DataProvider>
+
+    <Footer/>
+    </>
+  )
+ 
+  
+
+  // return (
+
+
+  //  <>
+  //      {displayPage == 0 && <Enter setDisplayPage={setDisplayPage} />}
+
+  //     {displayPage == 5 &&  (
+  //           <Wallet
+  //             setDisplayPage={setDisplayPage}
+  //             extraData={extraData}
+  //           />
+  //         )}
+
+  //     {displayPage > 0 && displayPage < 5 && (
+  //       <Container>
+  //         {displayPage == 1 && <Home extraData={extraData} setDisplayPage={setDisplayPage} />}
+  //         {displayPage == 2 && (
+  //           <Search
+  //             extraData={extraData}
+  //             setDisplayPage={setDisplayPage}
+  //             setTreeId={setTreeId}
+  //           />
+  //         )}
+  //         {displayPage == 3 && (<Mint extraData={extraData} getExtraData={getExtraData} setDisplayPage={setDisplayPage} />)}
+  //         {displayPage == 4 && (
+  //           <Tree
+  //             extraData={extraData}
+  //             setDisplayPage={setDisplayPage}
+  //             setTreeId={setTreeId}
+  //             treeId={treeId}
+  //           />
+  //         )}
 
           
-        </Container>
-      )}
-    </>
-  );
+  //       </Container>
+  //     )}
+  //   </> 
+  // );
 }
 
 export default Body;

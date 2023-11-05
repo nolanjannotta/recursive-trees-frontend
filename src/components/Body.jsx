@@ -34,7 +34,6 @@ function Body() {
 
     <Routes>
       <Route path="/" element={<Enter/>}/>
-      <Route path="/wallet" element={<Wallet/>}/>
     </Routes>
 
     <DataProvider>
@@ -42,7 +41,7 @@ function Body() {
       <Route path="/home" element={<Container><Home/></Container> }/>
       <Route path="/plant" element={<Container><Mint/></Container> }/>
       <Route path="/search" element={<Container><Search/></Container> }/>
-      
+      <Route path="/wallet" element={<Wallet/>}/>
       <Route path="/tree/:id" element={<Container><Tree/></Container> }/>
 
       <Route path="*" element={<InvalidUrl/>}/>

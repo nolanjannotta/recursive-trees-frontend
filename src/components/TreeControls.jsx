@@ -11,11 +11,6 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
   const [harvestTimes, setHarvestTimes] = useState({harvest: false, pick: false})
 
-  function handleInput(event) {
-    setWaterAmount(event.target.value);
-  }
-
-
 
   const { harvestWrite, pickFruitWrite, waterWrite, renderForIdWrite, transferFromWrite } = useTreeWrites(treeId, waterAmount);
 
@@ -45,8 +40,8 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
         <ButtonBox><Button disabled={!isOwner} onClick={renderForIdWrite.write}>Toggle render method</Button></ButtonBox>
 
             <ButtonBox>
-            <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={()=>{setWaterAmount(event.target.value)}}></Input>
-            <Button onClick={waterWrite.write}>water</Button>
+            <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
+            <Button disabled={!address && !waterWrite.write} onClick={waterWrite.write}>water</Button>
             </ButtonBox>
 
             
@@ -130,24 +125,15 @@ const ButtonBox = styled.div`
 
 
 `
-const Water = styled.div`
-  // width: 100%;
-  display: flex;
-  justify-content: center;
-  // padding: 0;
-  // margin: 0;
-`;
+
 const Controls = styled.div`
-  // background-color: orange;
   height: 50%;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  
-  // flex-wrap: wrap;
-  // overflowY: auto;
+
 `;
 
 const Input = styled.input`

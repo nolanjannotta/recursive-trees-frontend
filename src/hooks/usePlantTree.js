@@ -5,28 +5,33 @@ import {recursiveTrees} from '../Contracts.js'
 import treeABI from '../ABIs/treeABI.json'
 
 export function usePlantTree(batchAmount, price, callback) {
-
     const contract = {
         address: recursiveTrees,
         abi: treeABI,
     }
-      const { config: plantTreeConfig, error: plantTreeError } = usePrepareContractWrite({
+      const { config: plantTreeConfig} = usePrepareContractWrite({
         ...contract,
         functionName: 'plantTree',
-        value: `${price}`
+        value: price.toString(),
+        // onError(error) {
+        //   console.log('plant 1 error', error)
+        // },
 
       
       })
 
-      const { config: batchPlantConfig, error: batchPlantError } = usePrepareContractWrite({
+      const { config: batchPlantConfig} = usePrepareContractWrite({
         ...contract,
         functionName: 'batchPlant',
         args:[batchAmount],
-        value: `${batchAmount * price}`
+        value: (batchAmount * price).toString(),
+        // onError(error) {
+        //   console.log('batch error', error)
+        // },
 
       })
 
-      const { config: fruitTokenPlantConfig, error: fruitTokenPlantError } = usePrepareContractWrite({
+      const { config: fruitTokenPlantConfig} = usePrepareContractWrite({
         ...contract,
         functionName: 'plantTreeWithFruitTokens',
 
@@ -38,30 +43,13 @@ export function usePlantTree(batchAmount, price, callback) {
 
       const fruitTokenPlantTreeWrite = useContractWrite({...fruitTokenPlantConfig})
 
-      const { data, isError, isLoading } = useWaitForTransaction({
+      const {isError, isLoading } = useWaitForTransaction({
         hash: plantTreeWrite.data?.hash || batchPlantTree.data?.hash || fruitTokenPlantTreeWrite.data?.hash,
         onSuccess(data) {callback(data)}
 
       })
-      
-
-      console.log()
-
-      // const waitForTransaction = useWaitForTransaction({
-      //   hash: txHash,
-      //   onSuccess(data) {
-      //       callBack()
-      //     },
-      // })
 
 
-
-
-    //   useEffect(()=>{
-    //     waitForTransaction.isSuccess && callBack()
-
-    //   },[waitForTransaction.isSuccess])
     
-    
-  return {plantTreeWrite, batchPlantTree,fruitTokenPlantTreeWrite}
+  return {plantTreeWrite, batchPlantTree, fruitTokenPlantTreeWrite, isError, isLoading}
 }

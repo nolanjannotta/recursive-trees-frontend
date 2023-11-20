@@ -5,36 +5,21 @@ import {formatEther} from "viem"
 import {useAccountModal} from "@rainbow-me/rainbowkit";
 import {DataContext} from './DataContext'
 import {Link} from "react-router-dom";
+import { useUserTrees } from '../hooks/useUserTrees';
+import Loading from "./Loading";
 
 function Wallet() {
     
-    const { address, isConnecting, isDisconnected } = useAccount();
-    const {extraData, refetch} = useContext(DataContext);
+    const { address } = useAccount();
+    const {extraData} = useContext(DataContext);
 
     const { openAccountModal } = useAccountModal();
-    const [ids, setIds] = useState({
-      ids: [],
-      overFlow:0
-    });
+    console.log(extraData)
+    const ids = useUserTrees(extraData)
 
-    useEffect(()=>{
-      if(extraData && extraData[6].result) {
-
-        setIds({
-          ids: extraData[6].result.length > 20 ? extraData[6].result.slice(0,20) : extraData[6].result,
-          overFlow: extraData[6].result.length > 20 ? extraData[6].result.length - 20 : 0
-        })
-
-        
-      }
-      
-    },[extraData[6]])
-
-
-
-    useEffect(()=>{
-      console.log(ids)
-    },[ids])
+    if(!extraData ) {
+      return(<Container><Loading/></Container>)
+    }
 
   return (
     <Container>
@@ -48,16 +33,18 @@ function Wallet() {
 
         <h4> tree  balance: {extraData[3].result ? extraData[3].result.toString() : 0}</h4>
 
-        {<h4> ids: {ids.ids.map(element => " " + element.toString()).toString()} { ids.overFlow > 0 && ("+" + ids.overFlow + "more") }</h4>}
-        
-        
+        <h4>your trees:</h4>
+        <TokenList>
+          
+          {ids.map((element) => {return <Id><Link style={{color: "inherit"}} to={`/user/tree/${element}`}>{element.toString()}</Link></Id>})}
+        </TokenList>
         
 
         </Body>
 
         
         
-        <ButtonGroup>
+        <div>
         <Link to="/home"><button> back</button> </Link>
 
            {openAccountModal && (
@@ -65,7 +52,7 @@ function Wallet() {
           account
         </button>
       )}
-        </ButtonGroup>
+        </div>
       
     </Container>
   )
@@ -74,37 +61,41 @@ function Wallet() {
 export default Wallet
 
 
-const FruitToken = styled.div`
-  display: flex;
-  width: 80%;
-  align-items: flex-end;
-  justify-content: center;
+const Id = styled.li`
+margin-right: 8px;
+font-size: 20px;
+
+
+
+
 
 `
 
+const TokenList = styled.ul`
+max-width: 80%;
+height: 50px;
+list-style: none;
+// background-color: blue;
+display:inline;
+display:flex;
+overflow-x: hidden;
+overflow-y: hidden;
+&:hover {
+  overflow-x: scroll;
+}
+`
 
 const Body = styled.div`
 height: 80%;
 width: 60%;
-// background-color: blue;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-evenly;
-
-
-
 `
 
-
-
-const ButtonGroup = styled.div`
-// background-color: red;
-`
 
 const Container = styled.div`
-  // margin-top: 3%;
-  // padding-top: 5%;
   width: 80%;
   height: 80%;
   display: flex;
@@ -116,10 +107,3 @@ const Container = styled.div`
   box-shadow: 10px 10px rgb(26, 26, 26, 0.8);
 `;
 
-
-const Input = styled.input`
-  width: 15%;
-  height: 10%;
-
-
-`

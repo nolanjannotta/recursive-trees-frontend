@@ -1,8 +1,9 @@
 import React,{useEffect, useState, useContext} from 'react'
 import styled from 'styled-components'
 import { usePlantTree } from '../hooks/usePlantTree'
+import { useInsufficientFunds } from '../hooks/useInsufficientFunds'
 import {formatEther} from "viem"
-import { useAccount} from 'wagmi'
+import { useAccount, useBalance} from 'wagmi'
 import {DataContext} from './DataContext'
 import {Link} from "react-router-dom";
 import Loading from "./Loading";
@@ -12,52 +13,45 @@ import {useConnectModal} from "@rainbow-me/rainbowkit";
 function Mint() {
   const [batchTotal, setBatchTotal] = useState(1)
   const {address} = useAccount();
+  const balance = useBalance({
+    address: address,
+  });
+
+  
   const { openConnectModal } = useConnectModal();
   const [loadingText, setLoadingText] = useState("");
 
   const {extraData, refetch} = useContext(DataContext);
-
-
-  function handleSuccess(data) {
+  
+  function handleSuccess() {
     refetch();
-    // setLoading(false);
     setLoadingText("success!")
   }
 
   function refresh() {
     refetch();
-    // setLoading(false);
     setLoadingText("")
   }
 
 
 
-  const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite} = usePlantTree(batchTotal, Number(extraData && extraData[5].result) || 0,handleSuccess)
-  // const [loading, setLoading] = useState(plantTreeWrite.isLoading || batchPlantTree.isLoading);
-  
+  const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite, isError, isLoading} = usePlantTree(batchTotal, Number(extraData && extraData[5].result) || 0, handleSuccess)
+
+  const {plant1Disabled, batchDisabled} = useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance, setLoadingText)
+
+
   let isMinting = extraData ? extraData[2].result <= extraData[1].result : false
  
   function handleInput(event) {
-    setBatchTotal(event.target.value)
+    setBatchTotal(Number(event.target.value) > 0 ? Number(event.target.value) : 1)
+
 }
 
-useEffect(() => {
-  if(plantTreeWrite.isSuccess || batchPlantTree.isSuccess) {
-    // setLoading(false);
-    setLoadingText("tx submitted. awaiting results...")
-  }
-  if(plantTreeWrite.isError || batchPlantTree.isError) {
-    // setLoading(false);
-    setLoadingText("error occured, try again")
-  }
 
 
-},[plantTreeWrite.isSuccess,batchPlantTree.isSuccess,plantTreeWrite.isError,batchPlantTree.isError])
 
 if(!extraData) {
-  return(
-    <Loading/>
-  )
+  return(<Loading/>)
 }
 
   return (
@@ -84,12 +78,12 @@ if(!extraData) {
      
       <Buttons>     
           
-          <button disabled={!isMinting || !address} onClick={()=>{setLoadingText("awaiting user confirmation..."); plantTreeWrite.write()}}>plant 1</button>
+          <button disabled={!isMinting || !address || plant1Disabled} onClick={()=>{setLoadingText("awaiting user confirmation..."); plantTreeWrite.write()}}>plant 1</button>
           
 
           <Batch>
-            <Input placeholder='amount' type="number" max={100} onChange={handleInput}></Input>
-            <button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 100} onClick={()=>{setLoadingText("awaiting user confirmation...");batchPlantTree.write()}}>plant batch (100 max)</button>
+            <Input placeholder='amount'  type="number" max={100} onChange={handleInput}></Input>
+            <button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 100 || batchDisabled} onClick={()=>{setLoadingText("awaiting user confirmation...");batchPlantTree.write()}}>plant batch (100 max)</button>
           </Batch>
 
           <button disabled={!extraData[8].result || Number(formatEther(extraData[8].result)) < 1000} onClick={()=>{setLoadingText("awaiting user confirmation..."); fruitTokenPlantTreeWrite.write()}}>plant with fruit tokens (1000 fruit)</button>
@@ -106,58 +100,35 @@ export default Mint
 
 const PleaseConnect = styled.div`
 cursor: pointer;
-
-
 `
 
 
 const Batch = styled.div`
-  // background-color: yellow;
   display: flex;
   justify-content: flex-end;
-
-
-
-
-
-
 `
 
 
 const Buttons = styled.div`
-// background-color: blue;
   display: flex;
   justify-content: center;
-  // align-items: center;
   flex-direction: column;
-
-
 `
 
 const Input = styled.input`
-
   width: 15%;
-  // height: 10%;
-
-
 `
 
 const TotalMinted = styled.div`
-// background-color: yellow;
-// width: 20%;
 display:flex;
-// justify-content: space-between;
-
-
 `
 
 
 const Info = styled.div`
-// background-color: orange;
 width: 50%;
-height: 50%;
+min-height: 200px;
 display: flex;
-justify-content: center;
+justify-content: start;
 align-items: center;
 flex-direction: column;
 
@@ -165,12 +136,9 @@ flex-direction: column;
 `
 
 const P = styled.p`
-// margin: 20px;
-// background-color: blue;
 display: flex;
 justify-content: center;
 align-items: center;
-// height: 80px;
 padding: 0 10px 0 10px;
 `
 
@@ -182,7 +150,6 @@ display: flex;
 justify-content: space-evenly;
 align-items: center;
 flex-direction: column;
-// background-color: orange;
 
 `
 

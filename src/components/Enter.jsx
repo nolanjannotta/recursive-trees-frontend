@@ -1,19 +1,46 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import styled from 'styled-components'
-// import { DataContext } from './Body';
 import { Link } from 'react-router-dom'
+import { useNetwork, useSwitchNetwork } from 'wagmi'
+
 
 function Enter() {
 
-  // const data = useContext(DataContext);
-  // console.log(data)
+  const { chain } = useNetwork()
+  const { switchNetwork } = useSwitchNetwork()
+
+
 
   return (
     <Container>
       <h1>Recursive Trees</h1>
-        <Link to="/home">
-        <button>enter</button>
-        </Link>
+      
+      {/* {!chain ? (
+      <>
+        
+      <h5>hmm, it doesn't look like you have a wallet extension installed</h5>
+      <br/>
+      <h5>you wont be able to interact with any trees but feel free to take a look around!</h5>
+      </>) :
+       */}
+
+      {chain && chain?.id != 5 && (
+        <MessageBox>
+        
+        <Message>
+        
+      uh oh! looks like you aren't connected to Mainnet, click&nbsp;
+      <SwitchNetwork onClick={()=>switchNetwork?.(5)}>here</SwitchNetwork> to switch!
+      </Message>
+
+      <Message>
+      Otherwise feel free to take a look around.
+
+      </Message>
+      </MessageBox>
+      )}
+
+        <Link to="/home"><button>enter</button></Link>
     </Container>
   )
 }
@@ -21,11 +48,30 @@ function Enter() {
 export default Enter
 
 
+const SwitchNetwork = styled.span`
+cursor: pointer;
+text-decoration: underline;
+
+
+`
+
+const MessageBox = styled.div`
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+`
+
+
+const Message = styled.h3`
+margin: 0;
+padding: 0;
+
+`
 
 
 
 const Container = styled.div`
-// margin-top: 3%;
 width: 40%;
 min-height: 30%;
 display:flex;
@@ -37,6 +83,5 @@ border: 2px solid black;
 overflow-y: auto;
 box-shadow: 10px 10px rgb(26, 26, 26, 0.8);
 
-
-
 `
+

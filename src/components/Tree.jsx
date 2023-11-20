@@ -5,44 +5,42 @@ import styled from "styled-components";
 import {useAccount} from "wagmi";
 import Stats from "./Stats";
 import TreeControls from "./TreeControls";
-import { useParams } from "react-router-dom";
+import {Link, useParams, useNavigate,useLocation} from "react-router-dom";
 
 import {DataContext} from './DataContext'
-import { Link } from "react-router-dom";
 import TreeNotFound from "./TreeNotFound";
 import Loading from "./Loading";
 
 
 
 function Tree() {
-  // const [isOwner, setIsOwner] = useState(false);
-  const [treeInRange, setTreeInRange] = useState(true)
 
   let {id} = useParams();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location.pathname);
+
   const {extraData} = useContext(DataContext);
 
+  const userTrees = location.pathname.substring(0,5) == "/user";
 
-  const { treeData, isLoading,  refetch: getTreeData } = useGetTreeData(id); 
 
+  const { treeData,  refetch: getTreeData } = useGetTreeData(id); 
   const {tokenURI, treeJson, getUri } = useGetTokenURI(id);
 
-
+  // console.log((treeData[1].result.treeSeed).toString());
   const { address } = useAccount();
 
   const isOwner = treeData ? treeData[2].result == address : false;
 
-
   if(!extraData || !treeData ) {
-    return(
-      <Loading/>
-    )
+    return(<Loading/>)
   }
 
   if(extraData && id > extraData[2].result || !Number(id)) {
-    return(
-      <TreeNotFound/>
-    )
+    return(<TreeNotFound/>)
   }
 
   return (
@@ -51,8 +49,6 @@ function Tree() {
       <Middle>
         <Left>
           
-            {isLoading && <Error>loading tree</Error>}
-
             {!treeData[0].error && <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
 
             {treeData[0].error && !treeJson && 
@@ -63,26 +59,31 @@ function Tree() {
               </Error>}
 
             {treeData[0].error && treeJson && <SVG id="svg" data={treeJson.image} type="image/svg+xml"></SVG>}
+            
+          <div>
+            <Link to={`/${userTrees ? "user/" : ""}tree/${Number(id) - 1}`}><button disabled={Number(id) == 1} >previous</button></Link>
+            <Link to={`/${userTrees ? "user/" : ""}tree/${Number(id) + 1}`}><button disabled={Number(id) == extraData[2].result} >next</button></Link>
+          </div>
 
-          <Buttons>
-            <Link to={`/tree/${Number(id) - 1}`}><button disabled={Number(id) == 1} >previous</button></Link>
-            <Link to={`/tree/${Number(id) + 1}`}><button disabled={Number(id) == extraData[2].result} >next</button></Link>
-          </Buttons>
-          
         </Left>
 
         <Right>
-          <Stats treeData={treeData} treeId={id} address={address} isOwner={isOwner} />
+        <Stats treeData={treeData} treeId={id} address={address} isOwner={isOwner} />
           <TreeControls address={address} isOwner={isOwner} treeId={id} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>
 
         </Right>
 
       </Middle>
 
-      <ButtonGroup>
-      <Link to="/search"><button>back</button></Link>
+      <div>
+
+        <Link to={`/${userTrees ? "wallet/" : "search/"}`}><button>back</button></Link>
+
+        
         <button onClick={() => {getUri(); getTreeData();}}>refresh</button>
-      </ButtonGroup>
+      </div>
+
+      
 
     </Container>
   );
@@ -91,11 +92,6 @@ function Tree() {
 export default Tree;
 
 
-const Buttons = styled.div`
-  display:flex;
-  justify-content: center;
-  align-items: center;
-`
 
 const Right = styled.div`
   width: 45%;
@@ -103,11 +99,9 @@ const Right = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // background-color: green;
 `
 
 const Left = styled.div`
-  // background-color: blue;
   width: 45%;
   height: 100%;
   display: flex;
@@ -122,9 +116,7 @@ const Error = styled.p`
 `
 
 const SVG = styled.object`
-  width: 80%;
-  // height: 70%;
-  
+  width: 80%;  
 `;
 const Container = styled.div`
   width: 100%;
@@ -140,14 +132,8 @@ const Container = styled.div`
 
 const Middle = styled.div`
   width: 90%;
-  // padding: 1.5em;
-  // margin-top: 5em;
   min-height: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // background-color: blue;
-`;
-
-const ButtonGroup = styled.div`
-`;
+`

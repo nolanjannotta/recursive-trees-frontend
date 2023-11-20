@@ -1,20 +1,13 @@
 import './polyfills.js';
-import { useState } from 'react'
 import '@rainbow-me/rainbowkit/styles.css';
 import {getDefaultWallets,RainbowKitProvider} from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { mainnet, goerli, foundry } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import './App.css'
-import './components/NavBar.jsx'
-import NavBar from './components/NavBar.jsx';
 import Body from './components/Body.jsx';
-import Footer from './components/Footer.jsx';
 import styled from 'styled-components'; 
 import treeCollage2 from './assets/treeCollage2.png';
-
-import {Route, Routes} from 'react-router-dom'
 
 
 
@@ -22,7 +15,7 @@ import {Route, Routes} from 'react-router-dom'
 function App() {
 
   const { chains, publicClient } = configureChains(
-    [goerli, foundry],
+    [goerli, foundry, mainnet],
     [
       alchemyProvider({ apiKey: "RMv47zcgxW5yjSyfRQjPHCru9rJyNiuK" }),
       publicProvider()

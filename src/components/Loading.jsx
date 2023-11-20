@@ -13,12 +13,9 @@ function Loading() {
 export default Loading
 
 const Container = styled.div`
-// background-color: orange;
 height: 100%;
 display: flex;
 justify-content: center;
 align-items: center;
-
-
 
 `

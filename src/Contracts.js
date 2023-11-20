@@ -7,6 +7,16 @@
 //goerli 
 
 
-export const recursiveTrees = "0x695Ed0471901a16559dCFCB32564373bf3b13ee4" // newest
 
-export const fruitToken = "0xC30EaAcD526a33B39ddB9F38eE6689934B7c63BA"; 
+// fixed new math
+// export const recursiveTrees = "0x9Dd89A43Bf711a03324a3F428cF088838c5eEcE0" // newest
+
+// export const fruitToken = "0x39b1421dE2f0e97Ebb0572F208422F7673745553";
+
+
+
+// FINAL???
+export const recursiveTrees = "0xFa0638221bDB6993558D7f5ECB4Beba43C8045d5" // newest
+
+export const fruitToken = "0x201af1D5A54FC7B198d035DC478B37463318FE3D";
+

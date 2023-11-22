@@ -154,7 +154,7 @@ const SVG = styled.img`
 `;
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  // height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -165,11 +165,11 @@ const Container = styled.div`
 
 const Middle = styled.div`
   width: 90%;
-  height: 100%;
+  // height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: red;
+  // background-color: red;
 
   @media (max-width: 500px) {
     flex-direction: column;

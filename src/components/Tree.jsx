@@ -91,7 +91,7 @@ function Tree() {
 export default Tree;
 
 const Title = styled.h1`
-
+all: none;
 margin: 1rem;
 
 `

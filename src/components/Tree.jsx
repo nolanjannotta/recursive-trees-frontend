@@ -27,7 +27,6 @@ function Tree() {
   const { treeData,  refetch: getTreeData } = useGetTreeData(id); 
   const {tokenURI, treeJson, getUri } = useGetTokenURI(id);
 
-  // console.log((treeData[1].result.treeSeed).toString());
   const { address } = useAccount();
 
   const isOwner = treeData ? treeData[2].result == address : false;
@@ -46,7 +45,7 @@ function Tree() {
       <Middle>
         <Left> {/* this is also the top in mobile mode */}
           
-            {!treeData[0].error && <SVG id="svg" src={"data:image/svg+xml;base64," + Buffer.from(extraData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
+            {!treeData[0].error && <SVG id="svg" src={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
 
             {treeData[0].error && !treeJson && 
               <Error>uh oh, looks like `getRawSvg()` failed using this RPC url. This can happen when a tree is particularly large.
@@ -72,6 +71,8 @@ function Tree() {
 
         </Right>
 
+        
+
       </Middle>
 
       <ButtonGroup>
@@ -81,6 +82,7 @@ function Tree() {
         
         <Button onClick={() => {getUri(); getTreeData();}}>refresh</Button>
       </ButtonGroup>
+
 
       
 
@@ -149,10 +151,6 @@ const Error = styled.p`
 const SVG = styled.img`
   width: 80%;  
 
-  @media (max-width: 500px) {
-    width: 80%;
-  }
-
 `;
 const Container = styled.div`
   width: 100%;
@@ -167,11 +165,11 @@ const Container = styled.div`
 
 const Middle = styled.div`
   width: 90%;
-  min-height: 80%;
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // background-color: red;
+  background-color: red;
 
   @media (max-width: 500px) {
     flex-direction: column;

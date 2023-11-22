@@ -218,7 +218,7 @@ const Image = styled.object`
 
 
 const Title = styled.h1`
-
+all: none;
 
 @media (max-width: 500px) {
   font-size: 2rem;

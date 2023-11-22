@@ -46,7 +46,7 @@ function Tree() {
       <Middle>
         <Left> {/* this is also the top in mobile mode */}
           
-            {!treeData[0].error && <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
+            {!treeData[0].error && <SVG id="svg" src={"data:image/svg+xml;base64," + Buffer.from(extraData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
 
             {treeData[0].error && !treeJson && 
               <Error>uh oh, looks like `getRawSvg()` failed using this RPC url. This can happen when a tree is particularly large.
@@ -146,7 +146,7 @@ const Error = styled.p`
 
 `
 
-const SVG = styled.object`
+const SVG = styled.img`
   width: 80%;  
 
   @media (max-width: 500px) {

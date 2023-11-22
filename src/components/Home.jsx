@@ -24,7 +24,7 @@ function Home() {
         
         {!extraData[0].error ? (
           <Image
-            data={
+            src={
               "data:image/svg+xml;base64," +
               Buffer.from(extraData[0].result).toString("base64")
             }
@@ -208,7 +208,7 @@ function Home() {
 
 export default Home;
 
-const Image = styled.object`
+const Image = styled.img`
   width: 50%;
   @media (max-width: 500px) {
     width: 80%;
@@ -266,9 +266,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  @media(max-width: 500px) {
-    
-  }
 
   `;
 

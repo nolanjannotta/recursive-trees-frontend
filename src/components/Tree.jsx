@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {useAccount} from "wagmi";
 import Stats from "./Stats";
 import TreeControls from "./TreeControls";
-import {Link, useParams, useNavigate,useLocation} from "react-router-dom";
+import {Link, useParams,useLocation} from "react-router-dom";
 
 import {DataContext} from './DataContext'
 import TreeNotFound from "./TreeNotFound";
@@ -17,10 +17,7 @@ function Tree() {
 
   let {id} = useParams();
 
-  const navigate = useNavigate();
   const location = useLocation();
-
-  console.log(location.pathname);
 
   const {extraData} = useContext(DataContext);
 
@@ -45,9 +42,9 @@ function Tree() {
 
   return (
     <Container>
-      <h1>Tree #{id}</h1>
+      <Title>Tree #{id}</Title>
       <Middle>
-        <Left>
+        <Left> {/* this is also the top in mobile mode */}
           
             {!treeData[0].error && <SVG id="svg" data={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
 
@@ -60,14 +57,16 @@ function Tree() {
 
             {treeData[0].error && treeJson && <SVG id="svg" data={treeJson.image} type="image/svg+xml"></SVG>}
             
-          <div>
-            <Link to={`/${userTrees ? "user/" : ""}tree/${Number(id) - 1}`}><button disabled={Number(id) == 1} >previous</button></Link>
-            <Link to={`/${userTrees ? "user/" : ""}tree/${Number(id) + 1}`}><button disabled={Number(id) == extraData[2].result} >next</button></Link>
-          </div>
+          <ButtonGroup>
+            <Link to={`/${userTrees ? "user/" : ""}tree/${Number(id) - 1}`}><Button disabled={Number(id) == 1} >previous</Button></Link>
+            <Link to={`/${userTrees ? "user/" : ""}tree/${Number(id) + 1}`}><Button disabled={Number(id) == extraData[2].result} >next</Button></Link>
+          </ButtonGroup>
 
         </Left>
 
-        <Right>
+
+        <Right> {/* this is also the bottom in mobile mode */}
+
         <Stats treeData={treeData} treeId={id} address={address} isOwner={isOwner} />
           <TreeControls address={address} isOwner={isOwner} treeId={id} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>
 
@@ -75,13 +74,13 @@ function Tree() {
 
       </Middle>
 
-      <div>
+      <ButtonGroup>
 
-        <Link to={`/${userTrees ? "wallet/" : "search/"}`}><button>back</button></Link>
+        <Link to={`/${userTrees ? "wallet/" : "search/"}`}><Button>back</Button></Link>
 
         
-        <button onClick={() => {getUri(); getTreeData();}}>refresh</button>
-      </div>
+        <Button onClick={() => {getUri(); getTreeData();}}>refresh</Button>
+      </ButtonGroup>
 
       
 
@@ -91,14 +90,42 @@ function Tree() {
 
 export default Tree;
 
+const Title = styled.h1`
+
+margin: 1rem;
+
+`
+
+
+const ButtonGroup = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+`
+
+
+const Button = styled.button`
+
+@media (max-width: 500px) {
+  padding: .5rem 1rem .5rem  1rem; 
+  font-size: .5rem;
+}
+`;
 
 
 const Right = styled.div`
   width: 45%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: start;
+  // background-color: purple;
+  @media (max-width: 500px) {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+  }
 `
 
 const Left = styled.div`
@@ -108,6 +135,10 @@ const Left = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 const Error = styled.p`
@@ -117,16 +148,20 @@ const Error = styled.p`
 
 const SVG = styled.object`
   width: 80%;  
+
+  @media (max-width: 500px) {
+    width: 80%;
+  }
+
 `;
 const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   padding-top: 20px;
-
   
 `;
 
@@ -136,4 +171,11 @@ const Middle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  // background-color: red;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    width: 95%;
+    
+  }
 `

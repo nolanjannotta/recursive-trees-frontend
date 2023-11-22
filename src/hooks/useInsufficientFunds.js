@@ -3,35 +3,39 @@ import { useEffect, useState } from "react";
 
 
 
-export function useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance, setLoadingText) {
+export function useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance) {
     const [plant1Disabled, setPlant1Disabled] = useState(false)
     const [batchDisabled, setBatchDisabled] = useState(false)
-
+    const [loadingText, setLoadingText] = useState("");
 
     useEffect(() => {
-        console.log(batchTotal)
         if(isLoading) {
           setLoadingText("tx submitted. awaiting results...")
         }
         if(isError) {
           setLoadingText("error occured, try again")
         }
-        if(extraData) {
-            setLoadingText("***insufficient funds***")
-            if (balance.data.value < Number(extraData[5].result) * batchTotal) {
+        if(balance.data && extraData) {
+            let price = Number(extraData[5].result);
+            let userBalance = Number(balance.data.value);
+            // if users balance is less than the price for one tree:
+            if(userBalance < price) {
+                setLoadingText("***insufficient funds :( ***")
+                setPlant1Disabled(true);
+            }
+
+            // if users balance is less than the batch total price:
+            if (userBalance < (price * batchTotal)) {
+                setLoadingText("***insufficient funds :( ***")
                 setBatchDisabled(true);
             }
-        if(balance.data.value < extraData[5].result) {
             
-            setPlant1Disabled(true);
-          }
-          
-
-          
-          else{
-            setLoadingText("")
-            setBatchDisabled(false);
-          }
+            // if neither are true:
+            else{
+                setLoadingText("")
+                setBatchDisabled(false);
+                setPlant1Disabled(false);
+            }
         }
       
       
@@ -39,5 +43,5 @@ export function useInsufficientFunds(isLoading, isError, extraData, batchTotal, 
 
 
     
-      return {plant1Disabled, batchDisabled}
+      return {plant1Disabled, batchDisabled, loadingText, setLoadingText}
 }

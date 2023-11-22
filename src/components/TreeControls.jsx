@@ -37,11 +37,12 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
     <Controls>
       <ButtonRow>
 
-        <ButtonBox><Button disabled={!isOwner} onClick={renderForIdWrite.write}>Toggle render method</Button></ButtonBox>
+
+          <ButtonBox><Button disabled={!isOwner} onClick={renderForIdWrite.write}>Toggle render method</Button></ButtonBox>
 
             <ButtonBox>
-            <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
-            <Button disabled={!address && !waterWrite.write} onClick={waterWrite.write}>water</Button>
+              <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
+              <Button disabled={!address && !waterWrite.write} onClick={waterWrite.write}>water</Button>
             </ButtonBox>
 
             
@@ -64,17 +65,18 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
 
         <ButtonRow>
-        <ButtonBox>
-        <Link style={{fontColor: "none"}} href={`https://testnets.opensea.io/assets/goerli/${recursiveTrees}/${treeId}`} target="blank">
-        <Button>opensea</Button>
-        </Link>
-        </ButtonBox>
+            <ButtonBox>
+              <Link style={{fontColor: "none"}} href={`https://testnets.opensea.io/assets/goerli/${recursiveTrees}/${treeId}`} target="blank">
+                <Button>opensea</Button>
+              </Link>
+            </ButtonBox>
 
 
-        <ButtonBox> 
-          <TransferInput type="string" onWheel={(e) => e.preventDefault} value={transferAddress} onChange={(event)=>{setTransferAddress(event.target.value)}}></TransferInput>
-          <Button disabled={!isOwner} onClick={() => {transferFromWrite.write({args:[address, transferAddress, treeId]})}}>Transfer</Button>
-        </ButtonBox>
+            <ButtonBox> 
+              <TransferInput type="string" onWheel={(e) => e.preventDefault} value={transferAddress} onChange={(event)=>{setTransferAddress(event.target.value)}}></TransferInput>
+              <Button disabled={!isOwner} onClick={() => {transferFromWrite.write({args:[address, transferAddress, treeId]})}}>Transfer</Button>
+            </ButtonBox>
+
       </ButtonRow>
 
 
@@ -83,6 +85,8 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
         {!tokenURI &&
           <small><h5>oof, looks like tokenURI() ran out of gas using the provided RPC url :( if you own this tree, you can toggle render method to 'off chain' and hit refresh</h5></small> }
       </OutOfGas>
+
+
     </Controls>
   );
 }
@@ -94,51 +98,69 @@ const Link = styled.a`
   width: 100%;
 `
 
-const OutOfGas = styled.p`
-  // background-color: red;
+const OutOfGas = styled.div`
   height: 10%;
   width: 100%;
   text-align: center;
+  // background-color: green;
+  @media (max-width: 500px) {
+    font-size: .5rem;
+  }
 `;
+
 const ButtonRow = styled.div`
   width: 100%;
-  height: 20%;
+  height: 22.5%;
   display:flex;
   justify-content: space-between;
-
+  // background-color: blue;
 `;
+
 const Button = styled.button`
 width: 100%;
+padding: 1.2rem 0 1.2rem  0; 
+text-wrap: nowrap;
 height: 100%;
-margin: 0;
-padding: 0;
+@media (max-width: 500px) {
+  padding: .5rem 0 .5rem  0; 
+  font-size: .5rem;
+}
 `;
 
 const ButtonBox = styled.div`
     width: 49%;
-    height: 100%;
     display: flex;
     justify-content: center;
-
-
-
-
-
+    margin: .5rem 0 .5rem 0;
+    
 `
 
+
 const Controls = styled.div`
-  height: 50%;
   width: 100%;
+  height: 40%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
+  // background-color: blue;
+  margin: auto;
+  @media (max-width: 500px) {
+            height: 90%;
+            
+        }
 
 `;
 
+
 const Input = styled.input`
   width: 10%;
-  margin: 0;
+
+  @media (max-width: 500px) {
+    padding: .5rem 0 .5rem  0; 
+    width: 40%;
+    font-size: .5rem;
+  }
 `;
 
 const TransferInput = styled.input`

@@ -22,15 +22,14 @@ function Stats({treeId, treeData, isOwner}) {
                     <StatBox><h5>age: {(Number(treeData[1].result.age) / 86400).toFixed(3)} days</h5></StatBox>
 
                     {timeDisplay.isGrown ?  
-                    <StatBox><h5>next harvest in {timeDisplay.time > 0 ? timeDisplay.time : 0 } {timeDisplay.unit}</h5> <h5><small>&#160;&#160;&#160;&#160;&#160;{timeDisplay.date} </small></h5></StatBox>
+                    <StatBox><h5>next harvest in {timeDisplay.time > 0 ? timeDisplay.time : 0 } {timeDisplay.unit}</h5> <h5><small>{timeDisplay.date}</small></h5></StatBox>
                     :
-                    <StatBox><h5>fully grown in {timeDisplay.time} {timeDisplay.unit}</h5> <h5><small>&#160;&#160;&#160;&#160;&#160;{timeDisplay.date} </small></h5></StatBox>}
-
+                    <StatBox><h5>fully grown in {timeDisplay.time} {timeDisplay.unit}</h5> <h5><small>{timeDisplay.date} </small></h5></StatBox>}
 
                 </StatList>
                 <StatList>
-                    <StatBox><h5> percent grown: {Number(treeData[1].result.percentGrown) / 100}</h5></StatBox>
-                    <StatBox><h5> render method: { treeData[1].result.renderMethod ? "off chain" : "on chain"}</h5></StatBox>
+                    <StatBox><h5>percent grown: {Number(treeData[1].result.percentGrown) / 100}</h5></StatBox>
+                    <StatBox><h5>render method: { treeData[1].result.renderMethod ? "off chain" : "on chain"}</h5></StatBox>
                     <StatBox><h5>current fruit total: { Number(treeData[3].result)}</h5></StatBox>
                     <StatBox><h5>total harvested: {Number(treeData[1].result.totalHarvested)}</h5></StatBox>
                     <StatBox><h5>eth received: {formatEther(treeData[1].result.ethReceived)}</h5></StatBox>
@@ -51,10 +50,20 @@ const StatBox = styled.div`
 border: 1px solid black;
 border-radius: 8px;
 width: 100%;
-height: 15%;
+max-height: 5%;
 display: flex;
-justify-content: center;
+justify-content: space-evenly;
 align-items: center;
+padding: 1.2rem 0 1.2rem  0;
+margin .5rem auto;
+    @media (max-width: 500px) {
+        font-size: .5rem;
+        padding: .5rem 0 .5rem  0;
+        flex-direction: column;
+        margin .2rem auto;
+        width: 90%;
+        
+    }
 
 `
 
@@ -65,18 +74,27 @@ width: 49%;
 height: 100%;
 display:flex;
 flex-direction: column;
-justify-content: space-between;
-align-items: center;
+justify-content: center;
+align-items: space-evenly;
 
-`
+@media (max-width: 500px) {
+    
+}
+`;
 
 
    
 const StatsContainer = styled.div`
     width: 100%;
-    height: 50%;  
+    height: 60%;
     display:flex;
+    // background-color: orange;
     justify-content: space-between;
     align-items: space-between;
+    margin: auto;
+    @media (max-width: 500px) {
+        height: 90%;
+        
+    }
 
 `

@@ -25,7 +25,7 @@ function Wallet() {
     <Container>
         <h1>wallet</h1>
         <Body>
-        <h4>{address}</h4>
+        <Address>{address}</Address>
 
           <h4> fruit token balance: {formatEther(extraData[4].result)} </h4>
           
@@ -60,6 +60,14 @@ function Wallet() {
 
 export default Wallet
 
+const Address = styled.h4`
+@media (max-width: 500px) {
+  font-size: .8rem;
+}
+
+
+`
+
 
 const Id = styled.li`
 margin-right: 8px;
@@ -92,6 +100,11 @@ display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: space-evenly;
+
+@media (max-width: 500px) {
+  font-size: .7rem;
+}
+
 `
 
 
@@ -105,5 +118,9 @@ const Container = styled.div`
   background-color: #b6b6b6;
   border: 2px solid black;
   box-shadow: 10px 10px rgb(26, 26, 26, 0.8);
+
+  @media (max-width: 500px) {
+    width: 90%;
+  }
 `;
 

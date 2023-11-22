@@ -83,5 +83,10 @@ border: 2px solid black;
 overflow-y: auto;
 box-shadow: 10px 10px rgb(26, 26, 26, 0.8);
 
+@media (max-width: 500px) {
+  width: 90%;
+  font-size: .9rem
+}
+
 `
 

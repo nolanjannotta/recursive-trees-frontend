@@ -12,6 +12,7 @@ import {useConnectModal} from "@rainbow-me/rainbowkit";
 
 function Mint() {
   const [batchTotal, setBatchTotal] = useState(1)
+  // const [loadingText, setLoadingText] = useState("");
   const {address} = useAccount();
   const balance = useBalance({
     address: address,
@@ -19,7 +20,7 @@ function Mint() {
 
   
   const { openConnectModal } = useConnectModal();
-  const [loadingText, setLoadingText] = useState("");
+  
 
   const {extraData, refetch} = useContext(DataContext);
   
@@ -37,7 +38,7 @@ function Mint() {
 
   const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite, isError, isLoading} = usePlantTree(batchTotal, Number(extraData && extraData[5].result) || 0, handleSuccess)
 
-  const {plant1Disabled, batchDisabled} = useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance, setLoadingText)
+  const {plant1Disabled, batchDisabled, loadingText, setLoadingText} = useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance)
 
 
   let isMinting = extraData ? extraData[2].result <= extraData[1].result : false
@@ -62,7 +63,7 @@ if(!extraData) {
         <P>price: {formatEther(extraData[5].result.toString())} eth</P>
 
         <TotalMinted>
-        <P>{(extraData[2].result).toString()} / {extraData[1].result.toString()} minted</P> 
+        <P>{(extraData[2].result).toString()} / 7,000 minted</P> 
 
          
 
@@ -113,6 +114,10 @@ const Buttons = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  @media(max-width: 500px) {
+    width:80%;
+    
+  }
 `
 
 const Input = styled.input`
@@ -132,6 +137,10 @@ justify-content: start;
 align-items: center;
 flex-direction: column;
 
+@media (max-width: 500px) {
+  width: 100%;
+}
+
 
 `
 
@@ -140,6 +149,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 padding: 0 10px 0 10px;
+
 `
 
 

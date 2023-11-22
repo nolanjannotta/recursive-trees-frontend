@@ -20,16 +20,17 @@ function Home() {
   return (
     <Container>
       <Demo>
-        <h1>Recursive Trees</h1>
+        <Title>Recursive Trees</Title>
+        
         {!extraData[0].error ? (
-          <object
+          <Image
             data={
               "data:image/svg+xml;base64," +
               Buffer.from(extraData[0].result).toString("base64")
             }
-            width="50%"
+            
             type="image/svg+xml"
-          ></object>) : (<p>error loading tree #1. try reloading the page.</p>)
+          ></Image>) : (<p>error loading tree #1. try reloading the page.</p>)
       
       }
 
@@ -207,6 +208,23 @@ function Home() {
 
 export default Home;
 
+const Image = styled.object`
+  width: 50%;
+  @media (max-width: 500px) {
+    width: 80%;
+  }
+
+`
+
+
+const Title = styled.h1`
+
+
+@media (max-width: 500px) {
+  font-size: 2rem;
+}
+`
+
 const Bold = styled.span`
 font-weight: bold;
 
@@ -229,16 +247,29 @@ const Text = styled.div`
   align-items: center;
   flex-direction: column;
   text-align: center;
+
+  @media (max-width: 500px) {
+    width: 90%;
+  }
+
+
 `;
 
+
 const ButtonGroup = styled.div`
-  padding: 20px 50px 20px 50px;
+  // background-color: orange;
+  // padding: 20px 50px 20px 50px;
+  margin-top: 2rem;
 `;
 
 const Container = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  @media(max-width: 500px) {
+    
+  }
+
   `;
 
 const Demo = styled.div`

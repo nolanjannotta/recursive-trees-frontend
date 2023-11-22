@@ -40,7 +40,7 @@ function Mint() {
 
   const {plant1Disabled, batchDisabled, loadingText, setLoadingText} = useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance)
 
-
+  console.log(plant1Disabled, batchDisabled)
   let isMinting = extraData ? extraData[2].result <= extraData[1].result : false
  
   function handleInput(event) {
@@ -58,16 +58,15 @@ if(!extraData) {
   return (
     <Container>
       <h1>plant a tree</h1>
+
       <Info>
         
         <P>price: {formatEther(extraData[5].result.toString())} eth</P>
 
+
         <TotalMinted>
-        <P>{(extraData[2].result).toString()} / 7,000 minted</P> 
-
-         
-
-        <P style={{cursor: "pointer", fontSize: "10px"}} onClick={refresh}>refresh</P>
+          <P>{(extraData[2].result).toString()} / 7,000 minted</P> 
+          <P style={{cursor: "pointer", fontSize: ".7rem"}} onClick={refresh}>refresh</P>
         </TotalMinted>
 
         <P>{(extraData[7].result).toString()} / 2000 bonus trees planted</P>
@@ -76,27 +75,52 @@ if(!extraData) {
         <P>{loadingText}</P>
 
       </Info>
-     
+
       <Buttons>     
           
-          <button disabled={!isMinting || !address || plant1Disabled} onClick={()=>{setLoadingText("awaiting user confirmation..."); plantTreeWrite.write()}}>plant 1</button>
-          
 
+           <Button disabled={!isMinting || !address || plant1Disabled} onClick={()=>{setLoadingText("awaiting user confirmation..."); plantTreeWrite.write()}}>plant 1</Button>
+            
+        
           <Batch>
             <Input placeholder='amount'  type="number" max={100} onChange={handleInput}></Input>
-            <button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 100 || batchDisabled} onClick={()=>{setLoadingText("awaiting user confirmation...");batchPlantTree.write()}}>plant batch (100 max)</button>
+            <Button style={{flexGrow: "4"}} disabled={!isMinting || !address || batchTotal > 100 || batchDisabled} onClick={()=>{setLoadingText("awaiting user confirmation...");batchPlantTree.write()}}>plant batch (100 max)</Button>
           </Batch>
 
-          <button disabled={!extraData[8].result || Number(formatEther(extraData[8].result)) < 1000} onClick={()=>{setLoadingText("awaiting user confirmation..."); fruitTokenPlantTreeWrite.write()}}>plant with fruit tokens (1000 fruit)</button>
+          <Button disabled={!extraData[8].result || Number(formatEther(extraData[8].result)) < 1000} onClick={()=>{setLoadingText("awaiting user confirmation..."); fruitTokenPlantTreeWrite.write()}}>plant with fruit tokens (1000 fruit)</Button>
           
           
       </Buttons> 
-      <Link to="/home"><button>back</button> </Link>
+
+
+      <Link to="/home"><Back>back</Back> </Link>
     </Container>
   )
 }
 
 export default Mint
+
+
+const Back = styled.button`
+@media (max-width: 500px) {
+  height: 2rem; 
+  font-size: .5rem;
+}
+`
+
+
+const Button = styled.button`
+// width: 2rem;
+padding: 1.2rem 0 1.2rem  0; 
+margin: 1rem;
+// text-wrap: nowrap;
+// height: 100%;
+@media (max-width: 500px) {
+  height: 2rem; 
+  font-size: .5rem;
+  margin: .5rem;
+}
+`;
 
 
 const PleaseConnect = styled.div`
@@ -107,21 +131,32 @@ cursor: pointer;
 const Batch = styled.div`
   display: flex;
   justify-content: flex-end;
+  // height: 2rem;
 `
 
 
 const Buttons = styled.div`
+// width: 100%;
+padding: 1rem;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  align-content: center;
+  // background-color: blue;
+  margin: 2rem;
   @media(max-width: 500px) {
-    width:80%;
+    // width:80%;
     
   }
 `
 
 const Input = styled.input`
   width: 15%;
+  margin: 1rem;
+  @media (max-width: 500px) {
+    font-size: .5rem;
+    margin: .5rem;
+  }
 `
 
 const TotalMinted = styled.div`
@@ -130,12 +165,13 @@ display:flex;
 
 
 const Info = styled.div`
-width: 50%;
-min-height: 200px;
+// width: 50%;
+// height: 200px;
 display: flex;
 justify-content: start;
 align-items: center;
 flex-direction: column;
+// background-color: orange;
 
 @media (max-width: 500px) {
   width: 100%;
@@ -154,12 +190,13 @@ padding: 0 10px 0 10px;
 
 
 const Container = styled.div`
-height: 80%;
-width: 100%;
+// height: 80%;
+// width: 100%;
 display: flex;
 justify-content: space-evenly;
 align-items: center;
 flex-direction: column;
+// background-color: green;
 
 `
 

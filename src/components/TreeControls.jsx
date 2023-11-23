@@ -132,7 +132,6 @@ const ButtonBox = styled.div`
     display: flex;
     justify-content: center;
     margin: .5rem 0 .5rem 0;
-    background-color: blue;
     
 `
 
@@ -144,7 +143,7 @@ const Controls = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: blue;
+  // background-color: blue;
   margin: auto;
   @media (max-width: 500px) {
             height: 90%;
@@ -165,6 +164,10 @@ const Input = styled.input`
 
 const TransferInput = styled.input`
 width: 90%;
-// margin: 0;
+flex-grow:2;
+@media (max-width: 500px) {
+  padding: .5rem 0 .5rem  0; 
+  font-size: .5rem;
+}
 
 `

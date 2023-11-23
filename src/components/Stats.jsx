@@ -53,7 +53,8 @@ width: 100%;
 max-height: 5%;
 display: flex;
 justify-content: space-evenly;
-align-items: center;
+// align-items: center;
+text-align: center;
 padding: 1.2rem 0 1.2rem  0;
 margin .5rem auto;
     @media (max-width: 500px) {

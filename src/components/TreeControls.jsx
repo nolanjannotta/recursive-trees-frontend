@@ -137,7 +137,7 @@ const ButtonBox = styled.div`
 
 
 const Controls = styled.div`
-  // width: 100%;
+  width: 100%;
   // height: 40%;
   display: flex;
   flex-direction: column;

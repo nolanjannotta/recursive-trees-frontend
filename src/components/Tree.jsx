@@ -135,9 +135,8 @@ const Left = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: start;
   align-items: center;
-
   @media (max-width: 500px) {
     width: 100%;
   }
@@ -149,7 +148,10 @@ const Error = styled.p`
 `
 
 const SVG = styled.img`
-  width: 80%;  
+  width: 100%;  
+  @media (max-width: 500px) {
+    width: 80%;
+  }
 
 `;
 const Container = styled.div`

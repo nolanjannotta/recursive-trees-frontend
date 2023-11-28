@@ -20,13 +20,13 @@ export function UseTreeTimeDisplays(nextHarvest, percentGrown) {
 
     function calculateBestUnit(secondsUntilNextHarvest) {
         if(secondsUntilNextHarvest > oneDay) {
-            return {time: (secondsUntilNextHarvest/oneDay).toFixed(1), unit: "days"}
+            return {time: (secondsUntilNextHarvest/oneDay).toFixed(2), unit: "days"}
         }
         if(secondsUntilNextHarvest < oneDay && secondsUntilNextHarvest > hour) {
-            return {time: (secondsUntilNextHarvest/hour).toFixed(1), unit: "hours"}
+            return {time: (secondsUntilNextHarvest/hour).toFixed(2), unit: "hours"}
         }
         if(secondsUntilNextHarvest < hour && secondsUntilNextHarvest > minute) {
-            return {time: (secondsUntilNextHarvest/minute).toFixed(1), unit: "mins"}
+            return {time: (secondsUntilNextHarvest/minute).toFixed(2), unit: "mins"}
         }
         return {time: secondsUntilNextHarvest.toFixed(), unit: "sec"}
 

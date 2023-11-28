@@ -39,6 +39,8 @@ function Tree() {
     return(<TreeNotFound/>)
   }
 
+  console.log(treeData);
+
   return (
     <Container>
       <Title>Tree #{id}</Title>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useTreeWrites } from "../hooks/useTreeWrites";
 import {recursiveTrees} from '../Contracts.js' 
+import { isAddress } from 'viem'
+
 
 
 function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest}) {
@@ -41,7 +43,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
           <ButtonBox><Button disabled={!isOwner} onClick={renderForIdWrite.write}>Toggle render method</Button></ButtonBox>
 
             <ButtonBox>
-              <Input type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
+              <Input disabled={!address && !waterWrite.write} type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
               <Button disabled={!address && !waterWrite.write} onClick={waterWrite.write}>water</Button>
             </ButtonBox>
 
@@ -73,8 +75,8 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
 
             <ButtonBox> 
-              <TransferInput type="string" onWheel={(e) => e.preventDefault} value={transferAddress} onChange={(event)=>{setTransferAddress(event.target.value)}}></TransferInput>
-              <Button disabled={!isOwner} onClick={() => {transferFromWrite.write({args:[address, transferAddress, treeId]})}}>Transfer</Button>
+              <TransferInput placeholder="address" type="string" onWheel={(e) => e.preventDefault} value={transferAddress} onChange={(event)=>{setTransferAddress(event.target.value)}}></TransferInput>
+              <Button disabled={!isOwner || !isAddress(transferAddress)} onClick={() => {transferFromWrite.write({args:[address, transferAddress, treeId]})}}>Transfer</Button>
             </ButtonBox>
 
       </ButtonRow>
@@ -82,6 +84,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
 
       <OutOfGas>
+
         {!tokenURI &&
           <small><h5>oof, looks like tokenURI() ran out of gas using the provided RPC url :( if you own this tree, you can toggle render method to 'off chain' and hit refresh</h5></small> }
       </OutOfGas>

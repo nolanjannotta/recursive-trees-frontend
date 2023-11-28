@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import {useAccount} from "wagmi";
 import {formatEther} from "viem"
@@ -7,6 +7,7 @@ import {DataContext} from './DataContext'
 import {Link} from "react-router-dom";
 import { useUserTrees } from '../hooks/useUserTrees';
 import Loading from "./Loading";
+import {useConnectModal} from "@rainbow-me/rainbowkit";
 
 function Wallet() {
     
@@ -14,8 +15,19 @@ function Wallet() {
     const {extraData} = useContext(DataContext);
 
     const { openAccountModal } = useAccountModal();
-    console.log(extraData)
+    const { openConnectModal } = useConnectModal();
     const ids = useUserTrees(extraData)
+
+    if(!address) {
+      return(
+      
+      
+      <Container>
+        <h1>wallet</h1>
+        <button onClick={openConnectModal} type="button">connect wallet</button>
+        <Link to="/home"><button> back</button> </Link>
+      </Container>)
+    }
 
     if(!extraData ) {
       return(<Container><Loading/></Container>)

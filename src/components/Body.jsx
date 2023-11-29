@@ -64,4 +64,9 @@ const Container = styled.div`
   @media (max-width: 500px) {
     width: 95%;
   }
+
+  @media (max-width: 1280px) {
+    width: 95%;
+            
+  }
 `;

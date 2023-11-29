@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useTreeWrites } from "../hooks/useTreeWrites";
 import {recursiveTrees} from '../Contracts.js' 
 import { isAddress } from 'viem'
+import {useUpdateOpenSeaMetadata} from "../hooks/useUpdateOpenSeaMetadata"
 
 
 
@@ -16,7 +17,8 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
   const { harvestWrite, pickFruitWrite, waterWrite, renderForIdWrite, transferFromWrite } = useTreeWrites(treeId, waterAmount);
 
-  
+  // const {update} = useUpdateOpenSeaMetadata(treeId);
+
     useEffect(()=>{
       const timestamp = Date.now()/1000;
       if(timestamp < nextHarvest && timestamp > nextHarvest - 604800) {
@@ -116,7 +118,7 @@ const ButtonRow = styled.div`
   height: 22.5%;
   display:flex;
   justify-content: space-between;
-  // background-color: blue;
+  // background-color: orange;
 `;
 
 const Button = styled.button`
@@ -128,6 +130,11 @@ height: 100%;
   padding: .5rem 0 .5rem  0; 
   font-size: .5rem;
 }
+@media (max-width: 1280px) {
+  padding: .5rem 0 .5rem  0; 
+
+}
+
 `;
 
 const ButtonBox = styled.div`
@@ -141,7 +148,7 @@ const ButtonBox = styled.div`
 
 const Controls = styled.div`
   width: 100%;
-  // height: 40%;
+  height: max-content;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -149,9 +156,13 @@ const Controls = styled.div`
   // background-color: blue;
   margin: auto;
   @media (max-width: 500px) {
-            height: 90%;
+    height: 90%;
             
-        }
+  }
+  // @media (max-width: 1280px) {
+  //   height: 90%;
+            
+  // }
 
 `;
 
@@ -163,6 +174,12 @@ const Input = styled.input`
     width: 40%;
     font-size: .5rem;
   }
+
+  @media (max-width: 1280px) {
+    padding: .5rem 0 .5rem  0;
+    width: 40%; 
+  
+  }
 `;
 
 const TransferInput = styled.input`
@@ -171,6 +188,12 @@ flex-grow:2;
 @media (max-width: 500px) {
   padding: .5rem 0 .5rem  0; 
   font-size: .5rem;
+}
+
+@media (max-width: 1280px) {
+  padding: .5rem 0 .5rem  0;
+  // width: 40%; 
+
 }
 
 `

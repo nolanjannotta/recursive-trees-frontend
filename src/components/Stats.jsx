@@ -50,10 +50,10 @@ const StatBox = styled.div`
 border: 1px solid black;
 border-radius: 8px;
 width: 100%;
-max-height: 5%;
+// max-height: min-content;
 display: flex;
 justify-content: space-evenly;
-// align-items: center;
+align-items: center;
 text-align: center;
 padding: 1.2rem 0 1.2rem  0;
 margin .5rem auto;
@@ -66,6 +66,13 @@ margin .5rem auto;
         
     }
 
+
+    @media (max-width: 1280px) {
+
+        padding: .2rem 0 .2rem  0;
+                
+      }
+
 `
 
 
@@ -74,8 +81,9 @@ const StatList = styled.div`
 width: 49%;
 height: 100%;
 display:flex;
+// background-color: blue;
 flex-direction: column;
-justify-content: center;
+justify-content: start;
 align-items: space-evenly;
 
 @media (max-width: 500px) {
@@ -87,15 +95,17 @@ align-items: space-evenly;
    
 const StatsContainer = styled.div`
     width: 100%;
-    height: 60%;
+    height: max-content;
     display:flex;
     // background-color: orange;
     justify-content: space-between;
-    align-items: space-between;
+    align-content: start;
     margin: auto;
     @media (max-width: 500px) {
         height: 90%;
         
     }
+
+    
 
 `

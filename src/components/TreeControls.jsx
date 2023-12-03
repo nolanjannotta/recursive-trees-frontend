@@ -45,7 +45,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
           <ButtonBox><Button disabled={!isOwner} onClick={renderForIdWrite.write}>Toggle render method</Button></ButtonBox>
 
             <ButtonBox>
-              <Input disabled={!address && !waterWrite.write} onWheel={(e) => e.preventDefault} placeholder="0" onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
+              <Input  onWheel={(e) => e.preventDefault} placeholder="0" onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
               <Button disabled={!address && !waterWrite.write} onClick={waterWrite.write}>water</Button>
             </ButtonBox>
 

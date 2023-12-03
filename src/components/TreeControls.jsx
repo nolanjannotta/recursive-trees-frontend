@@ -45,7 +45,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
           <ButtonBox><Button disabled={!isOwner} onClick={renderForIdWrite.write}>Toggle render method</Button></ButtonBox>
 
             <ButtonBox>
-              <Input disabled={!address && !waterWrite.write} type="number" onWheel={(e) => e.preventDefault} value={waterAmount} onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
+              <Input disabled={!address && !waterWrite.write} type="number" onWheel={(e) => e.preventDefault} placeholder="0" onChange={(e)=>{setWaterAmount(e.target.value)}}></Input>
               <Button disabled={!address && !waterWrite.write} onClick={waterWrite.write}>water</Button>
             </ButtonBox>
 
@@ -170,7 +170,7 @@ const Controls = styled.div`
 
 
 const Input = styled.input`
-  width: 10%;
+  width: 20%;
   @media (max-width: 500px) {
     // padding: .5rem 0 .5rem  0; 
     // width: 40%;

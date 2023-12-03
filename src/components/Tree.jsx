@@ -120,11 +120,7 @@ const Button = styled.button`
 const Right = styled.div`
   width: 45%;
   height: 100%;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: start;
-  // background-color: purple;
+
   @media (max-width: 500px) {
     display: flex;
     flex-direction: row;

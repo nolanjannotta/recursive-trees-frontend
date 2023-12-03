@@ -15,7 +15,7 @@ import treeCollage2 from './assets/treeCollage2.png';
 function App() {
 
   const { chains, publicClient } = configureChains(
-    [goerli, foundry, mainnet],
+    [goerli],
     [
       alchemyProvider({ apiKey: "RMv47zcgxW5yjSyfRQjPHCru9rJyNiuK" }),
       publicProvider()

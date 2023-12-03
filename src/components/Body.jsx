@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState, useEffect} from "react";
 
 import styled from 'styled-components'
 
@@ -15,12 +15,31 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import InvalidUrl from "./InvalidUrl";
 
-import {Routes, Route} from 'react-router-dom';
+import {Routes, Route, useNavigate,useLocation} from 'react-router-dom';
 
+import { useNetwork, useAccount, useSwitchNetwork } from 'wagmi'
 
 
 
 function Body() {
+  const { chain } = useNetwork()
+  const {isConnected} = useAccount();
+  const { switchNetwork } = useSwitchNetwork()
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const [doNotEnter, setDoNotEnter] = useState(chain?.id != 5 && isConnected);
+
+  if(doNotEnter && location.pathname != "/") {
+    // navigate("/") 
+  }
+
+
+  useEffect(()=> {
+    setDoNotEnter(chain?.id != 5 && isConnected);
+
+  },[chain, isConnected, location.pathname])
+
 
   return (
     <>
@@ -29,7 +48,7 @@ function Body() {
 
     <DataProvider>
     <Routes> 
-      <Route path="/" element={<Enter/>}/>
+      <Route path="/" element={<Enter doNotEnter={doNotEnter}/>}/>
       <Route path="/home" element={<Container><Home/></Container> }/>
       <Route path="/plant" element={<Container><Mint/></Container> }/>
       <Route path="/search" element={<Container><Search/></Container> }/>

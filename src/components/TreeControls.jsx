@@ -127,10 +127,14 @@ padding: 1.2rem 0 1.2rem  0;
 text-wrap: nowrap;
 height: 100%;
 @media (max-width: 500px) {
-  padding: .5rem 0 .5rem  0; 
+  // padding: .5rem 0 .5rem  0; 
   font-size: .5rem;
 }
 @media (max-width: 1280px) {
+  padding: .5rem 0 .5rem  0; 
+
+}
+@media (max-height: 1000px) {
   padding: .5rem 0 .5rem  0; 
 
 }
@@ -170,8 +174,8 @@ const Controls = styled.div`
 const Input = styled.input`
   width: 10%;
   @media (max-width: 500px) {
-    padding: .5rem 0 .5rem  0; 
-    width: 40%;
+    // padding: .5rem 0 .5rem  0; 
+    // width: 40%;
     font-size: .5rem;
   }
 
@@ -180,19 +184,28 @@ const Input = styled.input`
     width: 40%; 
   
   }
+  @media (max-height: 1000px) {
+    padding: .5rem 0 .5rem  0; 
+  
+  }
+  
 `;
 
 const TransferInput = styled.input`
 width: 90%;
 flex-grow:2;
 @media (max-width: 500px) {
-  padding: .5rem 0 .5rem  0; 
+  // padding: .5rem 0 .5rem  0; 
   font-size: .5rem;
 }
 
 @media (max-width: 1280px) {
   padding: .5rem 0 .5rem  0;
   // width: 40%; 
+
+}
+@media (max-height: 1000px) {
+  padding: .5rem 0 .5rem  0; 
 
 }
 

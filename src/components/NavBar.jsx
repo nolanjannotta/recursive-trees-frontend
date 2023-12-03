@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { useAccount,useBalance, useEnsName, useContractWrite, useNetwork} from 'wagmi'
+import { useAccount,useBalance, useEnsName, useContractWrite, useNetwork, useSwitchNetwork} from 'wagmi'
 import { recursiveTrees } from '../Contracts';
 import treeABI from '../ABIs/treeABI.json'
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {useConnectModal} from "@rainbow-me/rainbowkit";
 function NavBar() {
   const { chain } = useNetwork()
   const { openConnectModal } = useConnectModal();
+  const { switchNetwork } = useSwitchNetwork()
     const { address } = useAccount()
     const balance = useBalance({
       address: recursiveTrees,
@@ -53,7 +54,12 @@ function NavBar() {
 
       <Right>
         {address ? 
-        <div>greetings, {data ? data : address.substring(0,8) + "..." + address.substring(35,42)}</div>
+        <>
+        {chain && chain?.id == 5 && <div onClick={() => switchNetwork?.(5)}>switch networks</div>}
+        
+        <div> greetings, {data ? data : address.substring(0,8) + "..." + address.substring(35,42)}</div>
+        </>
+        
          : 
          <Connect onClick={openConnectModal}>welcome, please connect your wallet</Connect>}
       </Right>

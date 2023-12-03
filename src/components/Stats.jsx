@@ -73,6 +73,11 @@ margin .5rem auto;
                 
       }
 
+      @media (max-height: 1000px) {
+        padding: .5rem 0 .5rem  0; 
+      
+      }
+
 `
 
 

@@ -1,42 +1,34 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { useNetwork, useSwitchNetwork } from 'wagmi'
+import { useNetwork, useSwitchNetwork, useDisconnect } from 'wagmi'
+import {useAccountModal} from "@rainbow-me/rainbowkit";
 
 
-function Enter() {
+
+function Enter({doNotEnter}) {
 
   const { chain } = useNetwork()
   const { switchNetwork } = useSwitchNetwork()
+  // const { disconnect } = useDisconnect()
 
 
 
   return (
     <Container>
       <h1>Recursive Trees</h1>
-      
-      {/* {!chain ? (
-      <>
-        
-      <h5>hmm, it doesn't look like you have a wallet extension installed</h5>
-      <br/>
-      <h5>you wont be able to interact with any trees but feel free to take a look around!</h5>
-      </>) :
-       */}
+
 
       {chain && chain?.id != 5 && (
         <MessageBox>
         
         <Message>
         
-      uh oh! looks like you aren't connected to Mainnet, click&nbsp;
-      <SwitchNetwork onClick={()=>switchNetwork?.(5)}>here</SwitchNetwork> to switch!
+      uh oh! looks like you aren't connected to the correct network, click <SwitchNetwork onClick={()=>switchNetwork?.(5)}>here</SwitchNetwork> to switch!
+      <br/>
+      but feel free to take a look around.
       </Message>
 
-      <Message>
-      Otherwise feel free to take a look around.
-
-      </Message>
       </MessageBox>
       )}
 
@@ -66,6 +58,7 @@ const MessageBox = styled.div`
 const Message = styled.h3`
 margin: 0;
 padding: 0;
+text-align: center;
 
 `
 

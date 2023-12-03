@@ -104,7 +104,7 @@ const StatsContainer = styled.div`
     // margin: auto;
     @media (max-width: 500px) {
         height: 100%;
-        width: 50%;
+        width: 49%;
     }
 
     

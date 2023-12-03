@@ -124,7 +124,9 @@ const Right = styled.div`
 
   @media (max-width: 500px) {
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
+    justify-content: space-between;
+
     width: 100%;
   }
 `

@@ -26,7 +26,7 @@ function Enter({doNotEnter}) {
         
       uh oh! looks like you aren't connected to the correct network, click <SwitchNetwork onClick={()=>switchNetwork?.(5)}>here</SwitchNetwork> to switch!
       <br/>
-      but feel free to take a look around.
+      Feel free to take a look around though.
       </Message>
 
       </MessageBox>
@@ -58,7 +58,7 @@ const MessageBox = styled.div`
 const Message = styled.h3`
 margin: 0;
 padding: 0;
-text-align: center;
+
 
 `
 
@@ -71,6 +71,7 @@ display:flex;
 justify-content: space-around;
 flex-direction: column;
 align-items: center;
+text-align: center;
 background-color: rgba(182, 182, 182, 0.6);
 border: 2px solid black;
 overflow-y: auto;

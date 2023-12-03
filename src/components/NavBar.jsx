@@ -55,8 +55,8 @@ function NavBar() {
       <Right>
         {address ? 
         <>
-        {chain && chain?.id == 5 && <div onClick={() => switchNetwork?.(5)}>switch networks</div>}
-        
+        {chain && chain?.id != 5 && <div style={{cursor: "pointer"}} onClick={() => switchNetwork?.(5)}>switch networks</div>}
+        &nbsp; &nbsp;
         <div> greetings, {data ? data : address.substring(0,8) + "..." + address.substring(35,42)}</div>
         </>
         
@@ -111,6 +111,7 @@ width: 40%;
 display:flex;
 justify-content: end;
 margin-right: 20px;
+// background-color: blue;
 @media (max-width: 500px) {
   
   justify-content: center;

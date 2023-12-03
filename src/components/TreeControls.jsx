@@ -126,6 +126,7 @@ width: 100%;
 padding: 1.2rem 0 1.2rem  0; 
 text-wrap: nowrap;
 height: 100%;
+text-align: center;
 @media (max-width: 500px) {
   // padding: .5rem 0 .5rem  0; 
   font-size: .5rem;
@@ -145,7 +146,7 @@ const ButtonBox = styled.div`
     width: 49%;
     display: flex;
     justify-content: center;
-    margin: .5rem 0 .5rem 0;
+    margin: .2rem 0 .2rem 0;
     
 `
 
@@ -163,10 +164,7 @@ const Controls = styled.div`
     height: 90%;
             
   }
-  // @media (max-width: 1280px) {
-  //   height: 90%;
-            
-  // }
+
 
 `;
 

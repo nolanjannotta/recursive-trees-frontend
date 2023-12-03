@@ -62,20 +62,16 @@ margin .5rem auto;
         padding: .5rem 0 .5rem  0;
         flex-direction: column;
         margin .2rem auto;
-        width: 90%;
-        
+        // width: 90%;
     }
 
 
     @media (max-width: 1280px) {
-
         padding: .2rem 0 .2rem  0;
-                
       }
 
-      @media (max-height: 1000px) {
+      @media (height: 1000px) {
         padding: .5rem 0 .5rem  0; 
-      
       }
 
 `
@@ -88,8 +84,8 @@ height: 100%;
 display:flex;
 // background-color: blue;
 flex-direction: column;
-justify-content: start;
-align-items: space-evenly;
+// justify-content: start;
+// align-items: space-evenly;
 
 @media (max-width: 500px) {
     
@@ -104,10 +100,10 @@ const StatsContainer = styled.div`
     display:flex;
     // background-color: orange;
     justify-content: space-between;
-    align-content: start;
-    margin: auto;
+    // align-content: start;
+    // margin: auto;
     @media (max-width: 500px) {
-        height: 90%;
+        height: 100%;
         
     }
 

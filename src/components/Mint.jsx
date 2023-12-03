@@ -40,7 +40,6 @@ function Mint() {
 
   const {plant1Disabled, batchDisabled, loadingText, setLoadingText} = useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance)
 
-  console.log(plant1Disabled, batchDisabled)
   let isMinting = extraData ? extraData[2].result <= extraData[1].result : false
  
   function handleInput(event) {
@@ -72,6 +71,7 @@ if(!extraData) {
         <P>{(extraData[7].result).toString()} / 2000 bonus trees planted</P>
 
         <PleaseConnect onClick={openConnectModal}>{!address &&  "please connect a wallet to mint"}</PleaseConnect>
+
         <P>{loadingText}</P>
 
       </Info>
@@ -185,6 +185,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 padding: 0 10px 0 10px;
+height: 2rem;
 
 `
 

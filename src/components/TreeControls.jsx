@@ -152,17 +152,17 @@ const ButtonBox = styled.div`
 
 
 const Controls = styled.div`
-  width: 100%;
-  height: max-content;
+  // height: max-content;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  // justify-content: space-between;
+  // align-items: center;
   // background-color: blue;
-  margin: auto;
+  // margin: auto;
+
   @media (max-width: 500px) {
-    height: 90%;
-            
+    height: 100%;
+    width: 50%;  
   }
 
 

@@ -119,8 +119,8 @@ const Button = styled.button`
 
 const Right = styled.div`
   width: 45%;
-  height: 100%;
-  // background-color: orange;
+  // height: 100%;
+  background-color: orange;
 
   @media (max-width: 500px) {
     display: flex;

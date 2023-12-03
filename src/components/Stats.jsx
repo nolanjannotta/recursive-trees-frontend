@@ -70,7 +70,7 @@ margin .5rem auto;
         padding: .2rem 0 .2rem  0;
       }
 
-      @media (height: 1000px) {
+      @media (max-height: 1000px) {
         padding: .5rem 0 .5rem  0; 
       }
 
@@ -95,8 +95,8 @@ flex-direction: column;
 
    
 const StatsContainer = styled.div`
-    width: 100%;
-    height: max-content;
+    // width: 100%;
+    // height: max-content;
     display:flex;
     // background-color: orange;
     justify-content: space-between;
@@ -104,7 +104,7 @@ const StatsContainer = styled.div`
     // margin: auto;
     @media (max-width: 500px) {
         height: 100%;
-        
+        width: 50%;
     }
 
     

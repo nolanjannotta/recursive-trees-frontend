@@ -6,7 +6,7 @@ function Footer() {
   return (
     <Container>
 
-      <a target="blank" href={`https://testnets.opensea.io/assets/goerli/${recursiveTrees}`}>open sea</a>
+      <a target="blank" href="https://opensea.io/collection/recursive-trees">open sea</a>
       <a target="blank" href={`https://etherscan.io/address/${recursiveTrees}`} >etherscan</a>
       <a target="blank" href={"https://twitter.com/jannotta_nolan"} >creator</a>
 

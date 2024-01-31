@@ -205,7 +205,12 @@ function Home() {
         <br/>
         <br/>
         <br/>
-        more info can be found here:
+        <div>
+          more info can be found
+        <a href="https://medium.com/@anjannotta/recursive-trees-a-revolutionary-new-digital-collectable-on-ethereum-4dfd9bf0aeb2" target="blank"> here</a>
+        
+        </div>
+        
         <br/>
         <br/>
         <br/>

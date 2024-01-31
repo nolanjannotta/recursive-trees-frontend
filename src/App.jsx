@@ -1,7 +1,7 @@
 import './polyfills.js';
 import '@rainbow-me/rainbowkit/styles.css';
 import {getDefaultWallets,RainbowKitProvider} from '@rainbow-me/rainbowkit';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi';
 import { mainnet, goerli, foundry } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
@@ -15,7 +15,7 @@ import treeCollage2 from './assets/treeCollage2.png';
 function App() {
 
   const { chains, publicClient } = configureChains(
-    [goerli],
+    [mainnet],
     [
       alchemyProvider({ apiKey: "RMv47zcgxW5yjSyfRQjPHCru9rJyNiuK" }),
       publicProvider()

@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 
 
 
-export function useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance) {
+export function useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance, setLoadingText) {
     const [plant1Disabled, setPlant1Disabled] = useState(false)
     const [batchDisabled, setBatchDisabled] = useState(false)
-    const [loadingText, setLoadingText] = useState("");
+    // const [loadingText, setLoadingText] = useState("");
 
     useEffect(() => {
         if(isLoading) {
@@ -43,5 +43,5 @@ export function useInsufficientFunds(isLoading, isError, extraData, batchTotal, 
 
 
     
-      return {plant1Disabled, batchDisabled, loadingText, setLoadingText}
+      return {plant1Disabled, batchDisabled}
 }

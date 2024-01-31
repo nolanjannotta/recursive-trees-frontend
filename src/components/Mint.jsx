@@ -12,7 +12,7 @@ import {useConnectModal} from "@rainbow-me/rainbowkit";
 
 function Mint() {
   const [batchTotal, setBatchTotal] = useState(1)
-  // const [loadingText, setLoadingText] = useState("");
+  const [loadingText, setLoadingText] = useState("");
   const {address} = useAccount();
   const balance = useBalance({
     address: address,
@@ -24,21 +24,30 @@ function Mint() {
 
   const {extraData, refetch} = useContext(DataContext);
   
-  function handleSuccess() {
+  function callback(error) {
     refetch();
-    setLoadingText("success!")
+    if(error) {
+      setLoadingText("failed!")
+    }
+    else {
+      setLoadingText("success!")
+    }
+    
   }
+
+
+  
 
   function refresh() {
     refetch();
-    setLoadingText("")
+    // setLoadingText("")
   }
 
 
 
-  const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite, isError, isLoading} = usePlantTree(batchTotal, Number(extraData && extraData[5].result) || 0, handleSuccess)
+  const {plantTreeWrite,batchPlantTree,fruitTokenPlantTreeWrite, isError, isLoading} = usePlantTree(batchTotal, Number(extraData && extraData[5].result) || 0, callback)
 
-  const {plant1Disabled, batchDisabled, loadingText, setLoadingText} = useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance)
+  const {plant1Disabled, batchDisabled} = useInsufficientFunds(isLoading, isError, extraData, batchTotal, balance, setLoadingText)
 
   let isMinting = extraData ? extraData[2].result <= extraData[1].result : false
  
@@ -64,7 +73,7 @@ if(!extraData) {
 
 
         <TotalMinted>
-          <P>{(extraData[2].result).toString()} / 7,000 minted</P> 
+          <P>{(extraData[2].result).toString()} / 5,000 minted</P> 
           <P style={{cursor: "pointer", fontSize: ".7rem"}} onClick={refresh}>refresh</P>
         </TotalMinted>
 

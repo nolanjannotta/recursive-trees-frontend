@@ -1,16 +1,18 @@
 import React from 'react'
 import styled from 'styled-components';
-import { useAccount,useBalance, useEnsName, useContractWrite, useNetwork, useSwitchNetwork} from 'wagmi'
+import { useAccount,useBalance, useEnsName, useContractWrite, useNetwork, useSwitchNetwork, useWaitForTransaction} from 'wagmi'
 import { recursiveTrees } from '../Contracts';
 import treeABI from '../ABIs/treeABI.json'
 import { Link } from 'react-router-dom';
-import {useConnectModal} from "@rainbow-me/rainbowkit";
+import {useConnectModal, useAccountModal} from "@rainbow-me/rainbowkit";
 
 
 
 function NavBar() {
   const { chain } = useNetwork()
   const { openConnectModal } = useConnectModal();
+  const { openAccountModal } = useAccountModal();
+
   const { switchNetwork } = useSwitchNetwork()
     const { address } = useAccount()
     const balance = useBalance({
@@ -31,6 +33,13 @@ function NavBar() {
       functionName: 'withdraw',
     })
 
+    
+
+    const { data: txData, isError, isLoading, isSuccess } = useWaitForTransaction({
+      hash: donate.data?.hash,
+    })
+
+
 
 
 
@@ -39,9 +48,17 @@ function NavBar() {
   return (
     <Container>
       <Left>
+      {isSuccess ? 
+        <Success> success!
+        
+        <a href={`https://goerli.etherscan.io/tx/${donate.data?.hash}`} target='blank'>etherscan</a>
+        
+        </Success> : 
+        
+        <><div >contract balance:{" " + balance?.data?.formatted.substring(0,4)}{balance?.data?.formatted.length > 4 && "..."} eth. <Donate onClick={donate?.write}>{chain && /*chain?.id == 5 &&*/  balance?.data?.value > 0 && "click here to donate!"}</Donate></div></>
+      }
 
-
-        {<div >contract balance:{" " + balance?.data?.formatted.substring(0,4)}{balance?.data?.formatted.length > 4 && "..."} eth. <Donate onClick={donate?.write}>{chain && chain?.id == 5 &&  balance?.data?.value > 0 && "click here to donate!"}</Donate></div>}
+        {/* {<div >contract balance:{" " + balance?.data?.formatted.substring(0,4)}{balance?.data?.formatted.length > 4 && "..."} eth. <Donate onClick={donate?.write}>{chain && chain?.id == 5 &&  balance?.data?.value > 0 && "click here to donate!"}</Donate></div>} */}
 
 
       </Left>
@@ -55,9 +72,9 @@ function NavBar() {
       <Right>
         {address ? 
         <>
-        {chain && chain?.id != 5 && <div style={{cursor: "pointer"}} onClick={() => switchNetwork?.(5)}>switch networks</div>}
+        {chain && (chain?.id != 5 && chain?.id != 1) && <div style={{cursor: "pointer"}} onClick={() => switchNetwork?.(5)}>switch networks</div>}
         &nbsp; &nbsp;
-        <div> greetings, {data ? data : address.substring(0,8) + "..." + address.substring(35,42)}</div>
+        <Connect onClick={openAccountModal}> greetings, {data ? data : address.substring(0,8) + "..." + address.substring(35,42)}</Connect>
         </>
         
          : 
@@ -71,6 +88,14 @@ function NavBar() {
 }
 
 export default NavBar
+
+const Success = styled.div`
+width: 25%;
+display:flex;
+justify-content: space-between;
+
+
+`
 
 const Connect = styled.div`
 cursor: pointer;
@@ -127,12 +152,14 @@ margin-right: 20px;
 `
 
 const Left = styled.div`
+// background-color: blue;
 // height: 100%;
 width: 40%;
 display:flex;
 justify-content: start;
 align-items: center;
 margin-left: 20px;
+margin-right: 20px;
 
 @media (max-width: 500px) {
   justify-content: end;

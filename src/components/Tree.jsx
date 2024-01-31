@@ -20,13 +20,11 @@ function Tree() {
   const location = useLocation();
 
   const {extraData} = useContext(DataContext);
-
+  console.log(extraData)
   const userTrees = location.pathname.substring(0,5) == "/user";
-
-
+ 
   const { treeData,  refetch: getTreeData } = useGetTreeData(id); 
   const {tokenURI, treeJson, getUri } = useGetTokenURI(id);
-
   const { address } = useAccount();
 
   const isOwner = treeData ? treeData[2].result == address : false;
@@ -39,7 +37,6 @@ function Tree() {
     return(<TreeNotFound/>)
   }
 
-  console.log(treeData);
 
   return (
     <Container>
@@ -47,7 +44,7 @@ function Tree() {
       <Middle>
         <Left> {/* this is also the top in mobile mode */}
           
-            {!treeData[0].error && <SVG id="svg" src={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG>}
+            {!treeData[0].error ? <SVG id="svg" src={"data:image/svg+xml;base64," + Buffer.from(treeData[0].result).toString("base64")} type="image/svg+xml"></SVG> : !!treeJson ? <SVGObject id="svg" data={treeJson.image} type="image/svg+xml"></SVGObject> : <></> }
 
             {treeData[0].error && !treeJson && 
               <Error>uh oh, looks like `getRawSvg()` failed using this RPC url. This can happen when a tree is particularly large.
@@ -68,7 +65,7 @@ function Tree() {
 
         <Right> {/* this is also the bottom in mobile mode */}
 
-        <Stats treeData={treeData} treeId={id} address={address} isOwner={isOwner} />
+        <Stats treeData={treeData} treeId={id} address={address} isOwner={isOwner} price={extraData[5].result} />
           <TreeControls address={address} isOwner={isOwner} treeId={id} treeJson={treeJson} tokenURI={tokenURI} nextHarvest={Number(treeData[1].result.nextHarvest)}></TreeControls>
 
         </Right>
@@ -155,6 +152,13 @@ const SVG = styled.img`
   }
 
 `;
+
+const SVGObject = styled.object`
+  width: 100%;  
+  @media (max-width: 500px) {
+   width: 80%;
+  }
+`
 const Container = styled.div`
   width: 100%;
   // height: 100%;

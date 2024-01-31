@@ -4,6 +4,8 @@ import {useEffect, useState} from 'react'
 
 
 export function UseTreeTimeDisplays(nextHarvest, percentGrown) {
+
+
     const [timeDisplay, setTimeDisplay] = useState({
         isGrown: false,
         time: 0,

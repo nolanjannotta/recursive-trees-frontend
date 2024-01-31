@@ -4,12 +4,17 @@ import {useConnectModal} from "@rainbow-me/rainbowkit";
 import {DataContext} from './DataContext'
 import { Link } from "react-router-dom";
 import Loading from "./Loading";
+import { useChainLinkEthPrice } from "../hooks/useChainLinkEthPrice";
 import { formatEther } from "viem";
 
 function Home() {
   const { openConnectModal } = useConnectModal();
 
   const {extraData} = useContext(DataContext);
+
+
+  const price = useChainLinkEthPrice(extraData ? Number(extraData[10].result) : 1e18);
+
 
   if(!extraData) {
     return(
@@ -82,7 +87,10 @@ function Home() {
            <br/>
            
         </h4>
-        <h3>As of right now, this project has raised {formatEther(extraData[10].result)} eth!</h3>
+
+        <div>
+        <h3>As of right now, this project has raised {formatEther(extraData[10].result)} eth! thats equal to ${(price)} USD! <small style={{fontSize: ".6em"}}>  (price courtesy of chainlink.)</small></h3>
+        </div>
 
         <br/>
         <br/>
@@ -91,7 +99,7 @@ function Home() {
         <br/>
         <br/>
         <p>
-          Long story short: when you plant a tree, your address and timestamp are stored on chain. 
+          When you plant a tree, your address and timestamp are stored on chain. 
           Adding these numbers together (the address is converted to a number) along with the token id
           gives us the "seed" of the tree. This seed is then hashed and used to deterministically generate branch lengths 
           and angles which results in a tree that is completely unique from every other tree. This is all done inside the smart contract.
@@ -118,13 +126,13 @@ function Home() {
         </p>
         <br />
         <p>
-          Each tree by default takes exactly 100 days to fully grow starting at the moment
+          Each tree by default takes exactly 50 days to fully grow starting at the moment
           it was planted (minted). The SVG image changes and grows over
           time to reflect the current position in the grow period. If you want
           to speed up the growing process, you can "water" a tree by calling
           "water(id)" and sending ether. If the tree exists, and is currently in
           its growing period, it will reduce the total grow period by 1 day 
-          for every .01 ether sent. .1 eth = 10 days, .5 = 50 days .001 = .1 days etc.
+          for every .01 ether sent. .1 eth = 10 days,  .23 = 23 days etc.
         </p>
         <p>
           Once the tree is fully grown, the first fruit grow period starts.
@@ -138,7 +146,7 @@ function Home() {
         <p>
           Watering a tree <Bold>after</Bold>  it is fully grow increases the odds that any particular leaf will turn into a fruit, 
           meaning it will grow more. The odds start 5% for every tree. This results in an average of about 100 fruit per tree per 
-          cycle. Watering with .001 eth increases the odds by .01%, amounts less than this won't have any effect
+          cycle. Watering with .0005 eth increases the odds by .01%, amounts less than this won't have any effect
           (aside from donating more money). Watering with .1 eth increases the odds by 1%, and so on. So, watering with a total 
           of 9.5 eth (since it starts at 5%) means 100% of the leaves will be fruit for ever (which is a huge flex). All eth received from watering is 
           donated to charity.
@@ -149,7 +157,7 @@ function Home() {
         <List>
           <li>recursively counts the amount of fruit on the tree</li>  
           <li>creates and saves a new fruit seed</li>
-          <li>mints Fruit Tokens to you. 1:1 for each fruit harvested</li>
+          <li>mints Fruit Tokens to you. One for each fruit harvested</li>
           <li>sets the next harvest time to 2 weeks from this function call</li>
         </List>
 
@@ -207,6 +215,14 @@ function Home() {
 }
 
 export default Home;
+
+const Donations = styled.div`
+display: flex;
+justify-content: center;
+background-color: orange;
+
+
+`
 
 const Image = styled.img`
   width: 50%;

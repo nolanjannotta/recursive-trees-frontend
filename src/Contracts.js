@@ -1,22 +1,29 @@
 
-// // ANVIL
-// export const recursiveTrees = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512"
+// // FINAL???
+// export const recursiveTrees = "0xFa0638221bDB6993558D7f5ECB4Beba43C8045d5" // newest
 
-// export const fruitToken = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; 
-
-//goerli 
+// export const fruitToken = "0x201af1D5A54FC7B198d035DC478B37463318FE3D";
 
 
+// 50 days
 
-// fixed new math
-// export const recursiveTrees = "0x9Dd89A43Bf711a03324a3F428cF088838c5eEcE0" // newest
+// export const recursiveTrees = "0x758d3d944033f5E2911b1977A5e2af9cbC48344f" // newest
 
-// export const fruitToken = "0x39b1421dE2f0e97Ebb0572F208422F7673745553";
-
+// export const fruitToken = "0x5f876077D3039fC4C422Eb5232545674fC26Ca98";
 
 
-// FINAL???
-export const recursiveTrees = "0xFa0638221bDB6993558D7f5ECB4Beba43C8045d5" // newest
+// // sepolia
+// export const recursiveTrees = "0xbc964c55570672f1012BE7e2deb13e22D3a6a349" //
 
-export const fruitToken = "0x201af1D5A54FC7B198d035DC478B37463318FE3D";
+// export const fruitToken = "0x7EFF986A14BD1149Bf50Cce964aC9D7a3c2473a9";
 
+// // foundry
+export const recursiveTrees="0xDB0ba7D03fE0f03FB9c7674FF6f8dC0f8a356443"
+export const fruitToken="0x6584f94d87c3d1a9A64699E366Ac530013Dac545"
+
+// fruit: 0x6584f94d87c3d1a9A64699E366Ac530013Dac545
+// trees: 0xDB0ba7D03fE0f03FB9c7674FF6f8dC0f8a356443
+
+// export const recursiveTrees = "0x92980187E54930171cCEDa2cC4f64bD7CA3B2101" //
+
+// export const fruitToken = "0x2eD1B229a202206bC7fdA9F19D5c1A9e9A33Aa88";

@@ -37,15 +37,35 @@ export function usePlantTree(batchAmount, price, callback) {
 
       })
 
-      const batchPlantTree = useContractWrite({...batchPlantConfig})
+      const batchPlantTree = useContractWrite({
+        ...batchPlantConfig,
+        onSuccess() {
+          callback(false)
+        },
+        onError() {
+          callback(true)
+        },
+  })
 
-      const plantTreeWrite = useContractWrite({...plantTreeConfig})
+      const plantTreeWrite = useContractWrite({
+        ...plantTreeConfig,
+        onSuccess() {
+          callback(false)
+        },
+        onError() {
+          callback(true)
+        },
+    })
 
       const fruitTokenPlantTreeWrite = useContractWrite({...fruitTokenPlantConfig})
 
       const {isError, isLoading } = useWaitForTransaction({
         hash: plantTreeWrite.data?.hash || batchPlantTree.data?.hash || fruitTokenPlantTreeWrite.data?.hash,
-        onSuccess(data) {callback(data)}
+        // onSuccess(data) {_onSuccess(data)},
+        // onError(data) {
+        //   console.log("yooo")
+          
+        //   _onError(data)}
 
       })
 

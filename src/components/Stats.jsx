@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { formatEther } from 'viem'
+import { formatEther, parseEther } from 'viem'
 import { UseTreeTimeDisplays } from '../hooks/UseTreeTimeDisplays'
+// import { useBlock } from 'wagmi'
 
-function Stats({treeId, treeData, isOwner}) {
+function Stats({treeId, treeData, isOwner, price}) {
+    // const result = useBlock()
+    // console.log(result);
+
     const colorRarities = ["ultra rare","very rare", "rare", "semi rare","common"]
 
     const timeDisplay = UseTreeTimeDisplays(Number(treeData[1].result.nextHarvest), Number(treeData[1].result.percentGrown))
-
-    if(treeData[0].error || treeData[1].error || treeData[2].error || treeData[3].error) {
+    if(treeData[1].error || treeData[2].error || treeData[3].error) {
         return
     }
+
+
+    const age = (Number(treeData[1].result.age) / 86400).toFixed(3) > 365 ? `${((Number(treeData[1].result.age) / 86400) / 365).toFixed(3)} years` : `${(Number(treeData[1].result.age) / 86400).toFixed(3)} days`
+
 
   return (
     <StatsContainer>
@@ -19,7 +26,7 @@ function Stats({treeId, treeData, isOwner}) {
                     <StatBox><h5>owner: {isOwner ? "you :)" :  treeData[2].result.substring(0,6) + "..." + treeData[2].result.substring(37,42)}</h5></StatBox>
                     <StatBox><h5>color: {colorRarities[Number(treeData[1].result.colorId)-1]}</h5></StatBox>
                     <StatBox><h5>planted on: {new Date(Number(treeData[1].result.plantedAt) * 1000).toLocaleDateString('en-us')}</h5></StatBox>
-                    <StatBox><h5>age: {(Number(treeData[1].result.age) / 86400).toFixed(3)} days</h5></StatBox>
+                    <StatBox><h5>age: {age}</h5></StatBox>
 
                     {timeDisplay.isGrown ?  
                     <StatBox><h5>next harvest in {timeDisplay.time > 0 ? timeDisplay.time : 0 } {timeDisplay.unit}</h5> <h5><small>{timeDisplay.date}</small></h5></StatBox>

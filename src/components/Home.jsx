@@ -104,7 +104,7 @@ function Home() {
           gives us the "seed" of the tree. This seed is then hashed and used to deterministically generate branch lengths 
           and angles which results in a tree that is completely unique from every other tree. This is all done inside the smart contract.
           Everything is handled on chain in solidity. The image and all traits are drawn and calculated 
-          everytime tokenURI() is called. This means there are zero urls, ipfs, centralized servers, dependencies, p5.js etc. 
+          everytime tokenURI() is called. This means there can be zero urls, ipfs, centralized servers, dependencies, p5.js etc. 
           <br/>
           There is one optional caveat however. In some cases, a tree might be so big 
           that, depending on the RPC url used, the call will run out of gas while generating the image and encoding everything on chain. 
@@ -148,14 +148,14 @@ function Home() {
           meaning it will grow more. The odds start 5% for every tree. This results in an average of about 100 fruit per tree per 
           cycle. Watering with .0005 eth increases the odds by .01%, amounts less than this won't have any effect
           (aside from donating more money). Watering with .1 eth increases the odds by 1%, and so on. So, watering with a total 
-          of 9.5 eth (since it starts at 5%) means 100% of the leaves will be fruit for ever (which is a huge flex). All eth received from watering is 
+          of 4.75 eth (since it starts at 5%) means 100% of the leaves will be fruit for ever. All eth received from watering is 
           donated to charity.
 
         </p>
         <br />
         harvesting does a few things:
         <List>
-          <li>recursively counts the amount of fruit on the tree</li>  
+          <li>counts the amount of fruit on the tree</li>  
           <li>creates and saves a new fruit seed</li>
           <li>mints Fruit Tokens to you. One for each fruit harvested</li>
           <li>sets the next harvest time to 2 weeks from this function call</li>
@@ -178,7 +178,7 @@ function Home() {
           <li>sets the next harvest time to 2 weeks from this function call</li>
         </List>
         <br/>
-        <p>harvesting and picking fruit can only be called by the owner of the tree being harvested for picked.</p>
+        <p>harvesting and picking fruit can only be called by the owner of the tree being harvested or picked.</p>
         <br />
         <br />
         <h4>The Fruit Token (ERC20)</h4>

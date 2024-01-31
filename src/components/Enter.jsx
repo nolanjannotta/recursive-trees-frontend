@@ -19,7 +19,7 @@ function Enter({doNotEnter}) {
       <h1>Recursive Trees</h1>
 
 
-      {chain && chain?.id != 5 && (
+      {chain && chain?.id != 1 && (
         <MessageBox>
         
         <Message>

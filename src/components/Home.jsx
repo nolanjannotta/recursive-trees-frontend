@@ -95,7 +95,7 @@ function Home() {
         <br/>
         <div>
           <h2>
-            medium article explaining how this project works can be found  
+            medium article explaining this project more in depth can be found  
         <a href="https://medium.com/@anjannotta/recursive-trees-a-revolutionary-new-digital-collectable-on-ethereum-4dfd9bf0aeb2" target="blank"> here!</a>
         </h2>
         </div>

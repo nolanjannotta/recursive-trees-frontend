@@ -70,7 +70,7 @@ function TreeControls({address, isOwner, treeId, treeJson, tokenURI, nextHarvest
 
         <ButtonRow>
             <ButtonBox>
-              <Link style={{fontColor: "none"}} href={`https://testnets.opensea.io/assets/goerli/${recursiveTrees}/${treeId}`} target="blank">
+              <Link style={{fontColor: "none"}} href={`https://opensea.io/assets/ethereum/${recursiveTrees}/${treeId}`} target="blank">
                 <Button>opensea</Button>
               </Link>
             </ButtonBox>

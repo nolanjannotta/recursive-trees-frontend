@@ -93,6 +93,14 @@ function Home() {
         </div>
 
         <br/>
+        <div>
+          <h2>
+            medium article explaining how this project works can be found  
+        <a href="https://medium.com/@anjannotta/recursive-trees-a-revolutionary-new-digital-collectable-on-ethereum-4dfd9bf0aeb2" target="blank"> here!</a>
+        </h2>
+        </div>
+        
+
         <br/>
         <br/>
         <h4>how it works:</h4>
@@ -205,10 +213,7 @@ function Home() {
         <br/>
         <br/>
         <br/>
-        <div>
-          more info can be found
-        <a href="https://medium.com/@anjannotta/recursive-trees-a-revolutionary-new-digital-collectable-on-ethereum-4dfd9bf0aeb2" target="blank"> here</a>
-        
+        <div>        
         </div>
         
         <br/>

@@ -14,17 +14,19 @@ import treeCollage2 from './assets/treeCollage2.png';
 
 function App() {
 
+  console.log(import.meta.env.VITE_API_KEY)
+
   const { chains, publicClient } = configureChains(
     [mainnet],
     [
-      alchemyProvider({ apiKey: "RMv47zcgxW5yjSyfRQjPHCru9rJyNiuK" }),
+      alchemyProvider({ apiKey: import.meta.env.VITE_API_KEY }),
       publicProvider()
     ]
   );
   
   const { connectors } = getDefaultWallets({
     appName: 'Recursive Trees',
-    projectId: 'e1bee9ecffe40a40a7c225a8d39c52e0',
+    projectId: import.meta.env.VITE_PROJECT_ID,
     chains
   });
   
